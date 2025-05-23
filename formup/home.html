@@ -1,0 +1,48 @@
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <title>FormUp - Accueil</title>  
+  <link rel="stylesheet" href="home.css">  
+</head>  
+<body>  
+  <nav class="navbar">  
+    <div class="navbar-left">  
+      <img class="logo" src="formup.png" alt="FormUp Logo" width="150" height="150">  
+      <div class="search-bar">  
+        <input type="text" placeholder="Search for anything">  
+      </div>  
+    </div>  
+    <div>  
+      <ul class="categorie">  
+        <li><a href="">Development</a></li>  
+        <li><a href="">Management</a></li>  
+        <li><a href="">Finance</a></li>  
+        <li><a href="">Graphic Design</a></li>  
+      </ul>  
+    </div>  
+  
+    <div class="navbar-right">  
+      <div class="user-avatar" id="userAvatar">  
+        <span id="userInitial">U</span>  
+      </div>  
+      <div class="user-dropdown" id="userDropdown">  
+        <div class="dropdown-content">  
+          <p id="userName">Nom d'utilisateur</p>  
+          <button onclick="logout()">Se déconnecter</button>  
+        </div>  
+      </div>  
+    </div>  
+  </nav>  
+  
+  <div class="image-container">  
+    <img class="formation" src="image.jpg" alt="formation" width="150" height="150">  
+    <div class="texte-sur-image">  
+      <h4>Bienvenue sur FormUp ! Découvrez vos formations personnalisées.</h4>  
+    </div>  
+  </div>  
+  
+  <script type="module" src="home.js"></script>  
+</body>  
+</html>
