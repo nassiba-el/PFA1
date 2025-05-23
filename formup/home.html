@@ -38,8 +38,17 @@
   
   <div class="image-container">  
     <img class="formation" src="image.jpg" alt="formation" width="150" height="150">  
-    <div class="texte-sur-image">  
-      <h4>Bienvenue sur FormUp ! Découvrez vos formations personnalisées.</h4>  
+      
+    <!-- Zone d'upload CV -->  
+    <div class="cv-upload-zone">  
+      <h5>📄 Uploadez votre CV</h5>  
+      <div class="file-input-wrapper">  
+        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" onchange="handleFileUpload(event)">  
+        <label for="cvFile" class="file-input-button">  
+          Choisir un fichier  
+        </label>  
+      </div>  
+      <div class="file-name" id="fileName">Aucun fichier sélectionné</div>  
     </div>  
   </div>  
   

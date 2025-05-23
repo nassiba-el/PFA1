@@ -53,7 +53,7 @@ window.logIn = async function(event) {
     }  
   
     // Redirection vers la page principale  
-    window.location.href = "formup.html";  
+    window.location.href = "home.html";  
   
   } catch (error) {  
     console.error("Erreur lors de la connexion:", error);  

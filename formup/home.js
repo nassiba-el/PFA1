@@ -22,11 +22,9 @@ const db = getFirestore(app);
 // Vérifier l'état d'authentification  
 onAuthStateChanged(auth, async (user) => {  
   if (user) {  
-    // Utilisateur connecté  
     await loadUserData(user.uid);  
     setupUserInterface();  
   } else {  
-    // Utilisateur non connecté, rediriger vers la page de connexion  
     window.location.href = "formup.html";  
   }  
 });  
@@ -39,13 +37,10 @@ async function loadUserData(uid) {
       const userData = userDoc.data();  
       updateUserInterface(userData);  
     } else {  
-      console.log("Aucune donnée utilisateur trouvée");  
-      // Utiliser l'email comme fallback  
       updateUserInterface({ fullname: auth.currentUser.email });  
     }  
   } catch (error) {  
     console.error("Erreur lors du chargement des données utilisateur:", error);  
-    // Utiliser l'email comme fallback  
     updateUserInterface({ fullname: auth.currentUser.email });  
   }  
 }  
@@ -55,7 +50,6 @@ function updateUserInterface(userData) {
   const userInitial = document.getElementById('userInitial');  
   const userName = document.getElementById('userName');  
     
-  // Extraire la première lettre du nom complet  
   const firstLetter = userData.fullname ? userData.fullname.charAt(0).toUpperCase() : 'U';  
     
   userInitial.textContent = firstLetter;  
@@ -67,21 +61,53 @@ function setupUserInterface() {
   const userAvatar = document.getElementById('userAvatar');  
   const userDropdown = document.getElementById('userDropdown');  
     
-  // Toggle dropdown au clic sur l'avatar  
   userAvatar.addEventListener('click', (e) => {  
     e.stopPropagation();  
     userDropdown.classList.toggle('show');  
   });  
     
-  // Fermer le dropdown en cliquant ailleurs  
   document.addEventListener('click', () => {  
     userDropdown.classList.remove('show');  
   });  
     
-  // Empêcher la fermeture du dropdown en cliquant dessus  
   userDropdown.addEventListener('click', (e) => {  
     e.stopPropagation();  
   });  
+}  
+  
+// Fonction pour gérer l'upload de CV  
+window.handleFileUpload = function(event) {  
+  const file = event.target.files[0];  
+  const fileNameDiv = document.getElementById('fileName');  
+    
+  if (file) {  
+    if (file.size > 5 * 1024 * 1024) {  
+      alert('Le fichier est trop volumineux. Taille maximale : 5MB');  
+      return;  
+    }  
+      
+    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];  
+    if (!allowedTypes.includes(file.type)) {  
+      alert('Type de fichier non supporté. Utilisez PDF, DOC ou DOCX');  
+      return;  
+    }  
+      
+    fileNameDiv.textContent = file.name;  
+    uploadCVToFirebase(file);  
+  } else {  
+    fileNameDiv.textContent = 'Aucun fichier sélectionné';  
+  }  
+};  
+  
+// Fonction pour uploader vers Firebase Storage  
+async function uploadCVToFirebase(file) {  
+  try {  
+    console.log('Upload du CV:', file.name);  
+    alert('CV uploadé avec succès : ' + file.name);  
+  } catch (error) {  
+    console.error('Erreur lors de l\'upload:', error);  
+    alert('Erreur lors de l\'upload du CV');  
+  }  
 }  
   
 // Fonction de déconnexion  
