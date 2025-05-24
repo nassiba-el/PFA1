@@ -52,7 +52,7 @@ signUp.addEventListener("click", async (event) => {
     await setDoc(doc(db, "users", user.uid), userData);  
   
     alert("Inscription réussie ! Bienvenue " + fullname + " !");  
-    window.location.href = "formup.html";  
+    window.location.href = "login.html";  
   
   } catch (error) {  
     console.error("Erreur lors de l'inscription:", error);  
