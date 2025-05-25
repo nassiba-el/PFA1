@@ -1,0 +1,273 @@
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Centre d'aide - FormUp</title>  
+  <link rel="stylesheet" href="help.css">  
+</head>  
+<body>  
+  <header class="header">  
+    <div class="header-content">  
+      <div class="logo-section">  
+        <div class="logo">  
+          <a href="home.html">  
+            <img src="formup.png" alt="FormUp Logo" class="logo-image">  
+          </a>  
+        </div>  
+      </div>  
+      <div class="back-button">  
+        <a href="home.html" class="btn-back">  
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+            <path d="M19 12H5"/>  
+            <polyline points="12,19 5,12 12,5"/>  
+          </svg>  
+          Retour au tableau de bord  
+        </a>  
+      </div>  
+    </div>  
+  </header>  
+  
+  <main class="help-container">  
+    <div class="help-content">  
+      <div class="help-header">  
+        <div class="help-icon">❓</div>  
+        <h1>Centre d'aide</h1>  
+        <p class="help-subtitle">Trouvez rapidement les réponses à vos questions</p>  
+      </div>  
+  
+      <!-- Barre de recherche -->  
+      <div class="search-section">  
+        <div class="search-box">  
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+            <circle cx="11" cy="11" r="8"/>  
+            <path d="M21 21l-4.35-4.35"/>  
+          </svg>  
+          <input type="text" id="searchInput" placeholder="Rechercher dans l'aide...">  
+        </div>  
+      </div>  
+  
+      <!-- Navigation rapide -->  
+      <div class="quick-nav">  
+        <button class="nav-btn active" data-section="faq">❓ FAQ</button>  
+        <button class="nav-btn" data-section="guides">📖 Guides</button>  
+        <button class="nav-btn" data-section="contact">✉️ Contact</button>  
+      </div>  
+  
+      <!-- Section FAQ -->  
+      <div class="help-section active" id="faq-section">  
+        <h2>Questions fréquentes</h2>  
+        <div class="faq-container">  
+          <div class="faq-item">  
+            <div class="faq-question">  
+              <h3>Comment créer un compte sur FormUp ?</h3>  
+              <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <polyline points="6,9 12,15 18,9"/>  
+              </svg>  
+            </div>  
+            <div class="faq-answer">  
+              <p>Pour créer un compte :</p>  
+              <ol>  
+                <li>Cliquez sur "S'inscrire" sur la page d'accueil</li>  
+                <li>Remplissez le formulaire avec vos informations</li>  
+                <li>Confirmez votre email</li>  
+                <li>Connectez-vous avec vos identifiants</li>  
+              </ol>  
+            </div>  
+          </div>  
+  
+          <div class="faq-item">  
+            <div class="faq-question">  
+              <h3>Comment m'inscrire à une formation ?</h3>  
+              <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <polyline points="6,9 12,15 18,9"/>  
+              </svg>  
+            </div>  
+            <div class="faq-answer">  
+              <p>Pour vous inscrire à une formation :</p>  
+              <ol>  
+                <li>Parcourez le catalogue de formations</li>  
+                <li>Cliquez sur la formation qui vous intéresse</li>  
+                <li>Consultez les détails et prérequis</li>  
+                <li>Cliquez sur "S'inscrire" ou "Commencer"</li>  
+              </ol>  
+            </div>  
+          </div>  
+  
+          <div class="faq-item">  
+            <div class="faq-question">  
+              <h3>Comment télécharger mon certificat ?</h3>  
+              <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <polyline points="6,9 12,15 18,9"/>  
+              </svg>  
+            </div>  
+            <div class="faq-answer">  
+              <p>Pour télécharger votre certificat :</p>  
+              <ol>  
+                <li>Allez dans "Accomplissements" depuis votre profil</li>  
+                <li>Trouvez la formation terminée</li>  
+                <li>Cliquez sur "Télécharger le certificat"</li>  
+                <li>Le fichier PDF sera téléchargé automatiquement</li>  
+              </ol>  
+            </div>  
+          </div>  
+  
+          <div class="faq-item">  
+            <div class="faq-question">  
+              <h3>Comment analyser mon CV ?</h3>  
+              <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <polyline points="6,9 12,15 18,9"/>  
+              </svg>  
+            </div>  
+            <div class="faq-answer">  
+              <p>Pour analyser votre CV :</p>  
+              <ol>  
+                <li>Connectez-vous à votre compte</li>  
+                <li>Cliquez sur "Analyser mon CV" sur le tableau de bord</li>  
+                <li>Téléchargez votre CV (PDF, DOC, DOCX)</li>  
+                <li>Attendez l'analyse automatique</li>  
+                <li>Consultez les recommandations personnalisées</li>  
+              </ol>  
+            </div>  
+          </div>  
+  
+          <div class="faq-item">  
+            <div class="faq-question">  
+              <h3>Comment modifier mes informations personnelles ?</h3>  
+              <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <polyline points="6,9 12,15 18,9"/>  
+              </svg>  
+            </div>  
+            <div class="faq-answer">  
+              <p>Pour modifier vos informations :</p>  
+              <ol>  
+                <li>Cliquez sur votre avatar en haut à droite</li>  
+                <li>Sélectionnez "Mon Profil"</li>  
+                <li>Modifiez les champs souhaités</li>  
+                <li>Cliquez sur "Enregistrer"</li>  
+              </ol>  
+            </div>  
+          </div>  
+        </div>  
+      </div>  
+  
+      <!-- Section Guides -->  
+      <div class="help-section" id="guides-section">  
+        <h2>Guides d'utilisation</h2>  
+        <div class="guides-grid">  
+          <div class="guide-card">  
+            <div class="guide-icon">🚀</div>  
+            <h3>Premiers pas</h3>  
+            <p>Découvrez comment utiliser FormUp pour la première fois</p>  
+            <ul>  
+              <li>Configuration du profil</li>  
+              <li>Navigation dans l'interface</li>  
+              <li>Personnalisation des paramètres</li>  
+            </ul>  
+          </div>  
+  
+          <div class="guide-card">  
+            <div class="guide-icon">📚</div>  
+            <h3>Gestion des formations</h3>  
+            <p>Apprenez à gérer efficacement vos formations</p>  
+            <ul>  
+              <li>Recherche et filtrage</li>  
+              <li>Suivi des progrès</li>  
+              <li>Planification d'apprentissage</li>  
+            </ul>  
+          </div>  
+  
+          <div class="guide-card">  
+            <div class="guide-icon">🎯</div>  
+            <h3>Analyse de CV</h3>  
+            <p>Maximisez l'efficacité de l'analyse de votre CV</p>  
+            <ul>  
+              <li>Formats supportés</li>  
+              <li>Optimisation du contenu</li>  
+              <li>Interprétation des résultats</li>  
+            </ul>  
+          </div>  
+  
+          <div class="guide-card">  
+            <div class="guide-icon">🏆</div>  
+            <h3>Accomplissements</h3>  
+            <p>Suivez vos progrès et obtenez des certificats</p>  
+            <ul>  
+              <li>Système de badges</li>  
+              <li>Génération de certificats</li>  
+              <li>Partage des réussites</li>  
+            </ul>  
+          </div>  
+        </div>  
+      </div>  
+  
+      <!-- Section Contact -->  
+      <div class="help-section" id="contact-section">  
+        <h2>Nous contacter</h2>  
+        <div class="contact-container">  
+          <div class="contact-info">  
+            <h3>Besoin d'aide supplémentaire ?</h3>  
+            <p>Notre équipe de support est là pour vous aider. N'hésitez pas à nous contacter pour toute question ou problème technique.</p>  
+              
+            <div class="contact-methods">  
+              <div class="contact-method">  
+                <div class="method-icon">📧</div>  
+                <div class="method-info">  
+                  <h4>Email</h4>  
+                  <p>support@formup.fr</p>  
+                  <span>Réponse sous 24h</span>  
+                </div>  
+              </div>  
+                
+              <div class="contact-method">  
+                <div class="method-icon">💬</div>  
+                <div class="method-info">  
+                  <h4>Chat en direct</h4>  
+                  <p>Disponible 9h-18h</p>  
+                  <span>Lun-Ven</span>  
+                </div>  
+              </div>  
+            </div>  
+          </div>  
+  
+          <form class="contact-form" id="contactForm">  
+            <h3>Envoyer un message</h3>  
+              
+            <div class="form-group">  
+              <label for="contactSubject">Sujet</label>  
+              <select id="contactSubject" required>  
+                <option value="">Sélectionnez un sujet</option>  
+                <option value="technical">Problème technique</option>  
+                <option value="account">Gestion de compte</option>  
+                <option value="course">Question sur une formation</option>  
+                <option value="certificate">Certificat</option>  
+                <option value="other">Autre</option>  
+              </select>  
+            </div>  
+  
+            <div class="form-group">  
+              <label for="contactMessage">Message</label>  
+              <textarea id="contactMessage" rows="5" placeholder="Décrivez votre problème ou question..." required></textarea>  
+            </div>  
+  
+            <div class="form-group">  
+              <label for="contactEmail">Email de contact</label>  
+              <input type="email" id="contactEmail" placeholder="votre@email.com" required>  
+            </div>  
+  
+            <button type="submit" class="submit-btn">  
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+                <line x1="22" y1="2" x2="11" y2="13"/>  
+                <polygon points="22,2 15,22 11,13 2,9 22,2"/>  
+              </svg>  
+              Envoyer le message  
+            </button>  
+          </form>  
+        </div>  
+      </div>  
+    </div>  
+  </main>  
+  
+  <script type="module" src="help.js"></script>  
+</body>  
+</html>

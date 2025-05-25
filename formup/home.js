@@ -178,7 +178,15 @@ function setupProfileMenuLinks() {
       e.preventDefault();    
       window.location.href = 'achievements.html';    
     });    
-  }    
+  }
+  const helpLink = document.getElementById('helpLink');  
+  
+if (helpLink) {  
+  helpLink.addEventListener('click', function(e) {  
+    e.preventDefault();  
+    window.location.href = 'help.html';  
+  });  
+}    
 }    
     
 // Gestion du clic sur le logo    

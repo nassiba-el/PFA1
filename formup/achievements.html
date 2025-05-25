@@ -1,0 +1,107 @@
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Accomplissements - FormUp</title>  
+  <link rel="stylesheet" href="achievements.css">  
+</head>  
+<body>  
+  <header class="header">  
+    <div class="header-content">  
+      <div class="logo-section">  
+        <div class="logo">  
+          <a href="home.html">  
+            <img src="formup.png" alt="FormUp Logo" class="logo-image">  
+          </a>  
+        </div>  
+      </div>  
+      <div class="back-button">  
+        <a href="home.html" class="btn-back">  
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+            <path d="M19 12H5"/>  
+            <polyline points="12,19 5,12 12,5"/>  
+          </svg>  
+          Retour au tableau de bord  
+        </a>  
+      </div>  
+    </div>  
+  </header>  
+  
+  <main class="achievements-container">  
+    <div class="achievements-content">  
+      <div class="achievements-header">  
+        <div class="achievement-avatar" id="achievementAvatar">🏆</div>  
+        <h1>Mes Accomplissements</h1>  
+        <p class="achievements-subtitle">Suivez vos progrès et célébrez vos réussites</p>  
+      </div>  
+  
+      <!-- Statistiques globales -->  
+      <div class="stats-section">  
+        <div class="stat-card">  
+          <div class="stat-icon">📚</div>  
+          <div class="stat-info">  
+            <h3 id="totalCourses">0</h3>  
+            <p>Formations suivies</p>  
+          </div>  
+        </div>  
+        <div class="stat-card">  
+          <div class="stat-icon">✅</div>  
+          <div class="stat-info">  
+            <h3 id="completedCourses">0</h3>  
+            <p>Formations terminées</p>  
+          </div>  
+        </div>  
+        <div class="stat-card">  
+          <div class="stat-icon">🎖️</div>  
+          <div class="stat-info">  
+            <h3 id="totalBadges">0</h3>  
+            <p>Badges obtenus</p>  
+          </div>  
+        </div>  
+        <div class="stat-card">  
+          <div class="stat-icon">⏱️</div>  
+          <div class="stat-info">  
+            <h3 id="totalHours">0h</h3>  
+            <p>Temps d'apprentissage</p>  
+          </div>  
+        </div>  
+      </div>  
+  
+      <!-- Graphique de progression -->  
+      <div class="progress-chart-section">  
+        <h2>📈 Progression globale</h2>  
+        <div class="chart-container">  
+          <canvas id="progressChart" width="400" height="200"></canvas>  
+        </div>  
+      </div>  
+  
+      <!-- Formations en cours -->  
+      <div class="current-courses-section">  
+        <h2>📖 Formations en cours</h2>  
+        <div class="courses-progress" id="coursesProgress">  
+          <!-- Généré dynamiquement -->  
+        </div>  
+      </div>  
+  
+      <!-- Badges obtenus -->  
+      <div class="badges-section">  
+        <h2>🏅 Badges obtenus</h2>  
+        <div class="badges-grid" id="badgesGrid">  
+          <!-- Généré dynamiquement -->  
+        </div>  
+      </div>  
+  
+      <!-- Certificats -->  
+      <div class="certificates-section">  
+        <h2>🎓 Certificats obtenus</h2>  
+        <div class="certificates-grid" id="certificatesGrid">  
+          <!-- Généré dynamiquement -->  
+        </div>  
+      </div>  
+    </div>  
+  </main>  
+  
+  <script type="module" src="achievements.js"></script>  
+</body>  
+</html>
