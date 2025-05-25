@@ -1,0 +1,174 @@
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Paramètres - FormUp</title>  
+  <link rel="stylesheet" href="settings.css">  
+</head>  
+<body>  
+  <header class="header">  
+    <div class="header-content">  
+      <div class="logo-section">  
+        <div class="logo">  
+          <a href="home.html">  
+            <img src="formup.png" alt="FormUp Logo" class="logo-image">  
+          </a>  
+        </div>  
+      </div>  
+      <div class="back-button">  
+        <a href="home.html" class="btn-back">  
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+            <path d="M19 12H5"/>  
+            <polyline points="12,19 5,12 12,5"/>  
+          </svg>  
+          Retour au tableau de bord  
+        </a>  
+      </div>  
+    </div>  
+  </header>  
+  
+  <main class="settings-container">  
+    <div class="settings-content">  
+      <div class="settings-header">  
+        <h1>⚙️ Paramètres</h1>  
+        <p class="settings-subtitle">Personnalisez votre expérience FormUp</p>  
+      </div>  
+  
+      <div class="settings-sections">  
+        <!-- Sécurité -->  
+        <div class="settings-section">  
+          <div class="section-header">  
+            <h2>🔐 Sécurité</h2>  
+          </div>  
+            
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Changement de mot de passe</h3>  
+              <p>Mettez à jour votre mot de passe pour sécuriser votre compte</p>  
+            </div>  
+            <button class="btn-primary" id="changePasswordBtn">Modifier</button>  
+          </div>  
+  
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Authentification à deux facteurs (2FA)</h3>  
+              <p>Renforcez la sécurité avec une vérification supplémentaire</p>  
+            </div>  
+            <label class="toggle-switch">  
+              <input type="checkbox" id="twoFactorToggle">  
+              <span class="slider"></span>  
+            </label>  
+          </div>  
+        </div>  
+  
+        <!-- Apparence -->  
+        <div class="settings-section">  
+          <div class="section-header">  
+            <h2>🎨 Apparence</h2>  
+          </div>  
+            
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Mode d'affichage</h3>  
+              <p>Choisissez entre le mode clair et sombre</p>  
+            </div>  
+            <select id="themeSelect" class="setting-select">  
+              <option value="light">Mode clair</option>  
+              <option value="dark">Mode sombre</option>  
+              <option value="auto">Automatique</option>  
+            </select>  
+          </div>  
+  
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Langue d'affichage</h3>  
+              <p>Sélectionnez votre langue préférée</p>  
+            </div>  
+            <select id="languageSelect" class="setting-select">  
+              <option value="fr-FR">Français</option>  
+              <option value="en-US">English (US)</option>  
+              <option value="en-GB">English (UK)</option>  
+              <option value="es-ES">Español</option>  
+            </select>  
+          </div>  
+        </div>  
+  
+        <!-- Notifications -->  
+        <div class="settings-section">  
+          <div class="section-header">  
+            <h2>✉️ Notifications</h2>  
+          </div>  
+            
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Notifications par e-mail</h3>  
+              <p>Recevez des alertes sur les nouvelles formations</p>  
+            </div>  
+            <label class="toggle-switch">  
+              <input type="checkbox" id="emailNotificationsToggle" checked>  
+              <span class="slider"></span>  
+            </label>  
+          </div>  
+  
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Recommandations personnalisées</h3>  
+              <p>Recevez des suggestions de formations adaptées</p>  
+            </div>  
+            <label class="toggle-switch">  
+              <input type="checkbox" id="recommendationsToggle" checked>  
+              <span class="slider"></span>  
+            </label>  
+          </div>  
+        </div>  
+  
+        <!-- Zone dangereuse -->  
+        <div class="settings-section danger-zone">  
+          <div class="section-header">  
+            <h2>🚨 Zone dangereuse</h2>  
+          </div>  
+            
+          <div class="setting-item">  
+            <div class="setting-info">  
+              <h3>Suppression du compte</h3>  
+              <p>Supprimer définitivement votre compte et toutes vos données</p>  
+            </div>  
+            <button class="btn-danger" id="deleteAccountBtn">Supprimer le compte</button>  
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+  </main>  
+  
+  <!-- Modal changement de mot de passe -->  
+  <div id="passwordModal" class="modal">  
+    <div class="modal-content">  
+      <div class="modal-header">  
+        <h3>Changer le mot de passe</h3>  
+        <button class="modal-close" id="closePasswordModal">&times;</button>  
+      </div>  
+      <form id="passwordForm" class="modal-form">  
+        <div class="input-group">  
+          <label for="currentPassword">Mot de passe actuel</label>  
+          <input type="password" id="currentPassword" required>  
+        </div>  
+        <div class="input-group">  
+          <label for="newPassword">Nouveau mot de passe</label>  
+          <input type="password" id="newPassword" required>  
+        </div>  
+        <div class="input-group">  
+          <label for="confirmPassword">Confirmer le nouveau mot de passe</label>  
+          <input type="password" id="confirmPassword" required>  
+        </div>  
+        <div class="modal-actions">  
+          <button type="button" class="btn-secondary" id="cancelPasswordChange">Annuler</button>  
+          <button type="submit" class="btn-primary">Mettre à jour</button>  
+        </div>  
+      </form>  
+    </div>  
+  </div>  
+  
+  <script type="module" src="settings.js"></script>  
+</body>  
+</html>
