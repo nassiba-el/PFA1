@@ -334,356 +334,350 @@ const formations = [
 ];  
   
 // Vérifier l'état d'authentification  
-onAuthStateChanged(auth, async (user) => {  
-  if (user) {  
-    await loadUserData(user.uid);  
-    setupUserInterface();  
-    generateCourses();  
-    setupCategoryFilters();  
-    setupLogoClick(); // Nouvelle fonction  
-  } else {  
-    window.location.href = "formup.html";  
-  }  
-});  
-  
-// Charger les données utilisateur depuis Firestore  
-async function loadUserData(uid) {  
-  try {  
-    const userDoc = await getDoc(doc(db, "users", uid));  
-    if (userDoc.exists()) {  
-      const userData = userDoc.data();  
-      updateUserInterface(userData);  
-    } else {  
-      updateUserInterface({   
-        fullname: auth.currentUser.email,  
-        email: auth.currentUser.email   
-      });  
-    }  
-  } catch (error) {  
-    console.error("Erreur lors du chargement des données utilisateur:", error);  
-    updateUserInterface({   
-      fullname: auth.currentUser.email,  
-      email: auth.currentUser.email   
-    });  
-  }  
-}  
-  
-// Mettre à jour l'interface utilisateur (MODIFIÉ pour prénom + dropdown enrichi)  
-function updateUserInterface(userData) {  
-  const userInitial = document.getElementById('userInitial');  
-  const userName = document.getElementById('userName');  
-  const userFullName = document.getElementById('userFullName');  
-  const userEmail = document.getElementById('userEmail');  
-  const userAvatarLarge = document.getElementById('userAvatarLarge');  
-    
-  // Extraire le prénom (premier mot) au lieu du nom complet  
-  const firstName = userData.fullname ? userData.fullname.split(' ')[0] : 'Utilisateur';  
-  const firstLetter = firstName.charAt(0).toUpperCase();  
-    
-  if (userInitial) userInitial.textContent = firstLetter;  
-  if (userName) userName.textContent = firstName; // Affiche seulement le prénom  
-  if (userFullName) userFullName.textContent = userData.fullname || 'Utilisateur';  
-  if (userEmail) userEmail.textContent = userData.email || auth.currentUser?.email || 'email@example.com';  
-  if (userAvatarLarge) userAvatarLarge.textContent = firstLetter;  
-}  
-  
-// Configurer les événements de l'interface utilisateur (ÉTENDU)  
-function setupUserInterface() {  
-  const userAvatar = document.getElementById('userAvatar');  
-  const userDropdown = document.getElementById('userDropdown');  
-    
-  if (userAvatar && userDropdown) {  
-    userAvatar.addEventListener('click', (e) => {  
-      e.stopPropagation();  
-      userDropdown.classList.toggle('show');  
-    });  
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    await loadUserData(user.uid);
+    setupUserInterface();
+    generateCourses();
+    setupCategoryFilters();
+    setupLogoClick();
+  } else {
+    window.location.href = "formup.html";
+  }
+});
+
+// Load user data from Firestore
+async function loadUserData(uid) {
+  try {
+    const userDoc = await getDoc(doc(db, "users", uid));
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      updateUserInterface(userData);
+    } else {
+      updateUserInterface({
+        fullname: auth.currentUser.email,
+        email: auth.currentUser.email
+      });
+    }
+  } catch (error) {
+    console.error("Error loading user data:", error);
+    updateUserInterface({
+      fullname: auth.currentUser.email,
+      email: auth.currentUser.email
+    });
+  }
+}
+
+// Update user interface
+function updateUserInterface(userData) {
+  const userInitial = document.getElementById('userInitial');
+  const userName = document.getElementById('userName');
+  const userFullName = document.getElementById('userFullName');
+  const userEmail = document.getElementById('userEmail');
+  const userAvatarLarge = document.getElementById('userAvatarLarge');
+
+  const firstName = userData.fullname ? userData.fullname.split(' ')[0] : 'Utilisateur';
+  const firstLetter = firstName.charAt(0).toUpperCase();
+
+  if (userInitial) userInitial.textContent = firstLetter;
+  if (userName) userName.textContent = firstName;
+  if (userFullName) userFullName.textContent = userData.fullname || 'Utilisateur';
+  if (userEmail) userEmail.textContent = userData.email || auth.currentUser?.email || 'email@example.com';
+  if (userAvatarLarge) userAvatarLarge.textContent = firstLetter;
+}
+
+// Setup user interface
+function setupUserInterface() {
+  const userAvatar = document.getElementById('userAvatar');
+  const userDropdown = document.getElementById('userDropdown');
+
+  if (userAvatar && userDropdown) {
+    userAvatar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', () => {
+      userDropdown.classList.remove('show');
+    });
+
+    userDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  setupProfileMenuLinks();
+}
+
+// Setup profile menu links
+function setupProfileMenuLinks() {
+  const profileLink = document.getElementById('profileLink');
+  const settingsLink = document.getElementById('settingsLink');
+  const achievementsLink = document.getElementById('achievementsLink');
+  const helpLink = document.getElementById('helpLink');
+
+  if (profileLink) {
+    profileLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'profile.html';
+    });
+  }
+
+  if (settingsLink) {
+    settingsLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'settings.html';
+    });
+  }
+
+  if (achievementsLink) {
+    achievementsLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'achievements.html';
+    });
+  }
+
+  if (helpLink) {
+    helpLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'help.html';
+    });
+  }
+}
+
+// Setup logo click
+function setupLogoClick() {
+  const logoLink = document.getElementById('logoLink');
+  if (logoLink) {
+    logoLink.addEventListener('click', (e) => {
+      e.preventDefault();
       
-    document.addEventListener('click', () => {  
-      userDropdown.classList.remove('show');  
-    });  
+      const categoryBadges = document.querySelectorAll('.categories .category-badge');
+      categoryBadges.forEach(badge => badge.classList.remove('active'));
       
-    userDropdown.addEventListener('click', (e) => {  
-      e.stopPropagation();  
-    });  
-  }  
-  
-  // Gestionnaires pour les nouveaux liens du menu profil  
-  setupProfileMenuLinks();  
-}  
-  
-// NOUVELLE FONCTION : Configurer les liens du menu profil  
-function setupProfileMenuLinks() {  
-  const profileLink = document.getElementById('profileLink');  
-  const settingsLink = document.getElementById('settingsLink');  
-  const achievementsLink = document.getElementById('achievementsLink');  
-    
-  if (profileLink) {  
-    profileLink.addEventListener('click', function(e) {  
-      e.preventDefault();  
-      window.location.href = 'profile.html';  
-    });  
-  }  
-    
-  if (settingsLink) {  
-    settingsLink.addEventListener('click', function(e) {  
-      e.preventDefault();  
-      window.location.href = 'settings.html';  
-    });  
-  }  
-    
-  if (achievementsLink) {  
-    achievementsLink.addEventListener('click', function(e) {  
-      e.preventDefault();  
-      window.location.href = 'achievements.html';  
-    });  
-  }  
-}  
-  
-// NOUVELLE FONCTION : Gestion du clic sur le logo  
-function setupLogoClick() {  
-  const logoLink = document.getElementById('logoLink');  
-  if (logoLink) {  
-    logoLink.addEventListener('click', function(e) {  
-      e.preventDefault();  
-        
-      // Retirer toutes les classes active des catégories  
-      const categoryBadges = document.querySelectorAll('.categories .category-badge');  
-      categoryBadges.forEach(badge => badge.classList.remove('active'));  
-        
-      // Afficher toutes les formations  
-      showAllCourses();  
-        
-      // Faire défiler vers la section des formations  
-      const coursesSection = document.getElementById('courses-section');  
-      if (coursesSection) {  
-        coursesSection.scrollIntoView({   
-          behavior: 'smooth',  
-          block: 'start'  
-        });  
-      }  
-    });  
-  }  
-}  
-  
-// Générer les cartes de formations dynamiquement  
-function generateCourses() {  
-  const coursesGrid = document.getElementById('coursesGrid');  
-  if (!coursesGrid) return;  
-    
-  coursesGrid.innerHTML = '';  
-    
-  formations.forEach((formation, index) => {  
-    const courseCard = document.createElement('div');  
-    courseCard.className = 'course-card';  
-    courseCard.style.opacity = '0';  
-    courseCard.style.transform = 'translateY(20px)';  
-    courseCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';  
+      showAllCourses();
       
-    courseCard.innerHTML = `  
-      <img src="${formation.image}" alt="${formation.title}" class="course-image">  
-      <div class="course-content">  
-        <div class="course-meta">  
-          <span class="course-category category-badge">${formation.category}</span>  
-        </div>  
-        <h3 class="course-title">${formation.title}</h3>  
-        <p class="course-description">${formation.description}</p>  
-        <p class="course-instructor">${formation.instructor}</p>  
-        <div class="course-stats">  
-          <div class="course-info">  
-            <span>⏱ ${formation.duration}</span>  
-            <span>👥 ${formation.students}</span>  
-          </div>  
-          <div class="course-rating">  
-            <span class="star">⭐</span>  
-            <span>${formation.rating}</span>  
-          </div>  
-        </div>  
-        <button class="course-button">Commencer le cours</button>  
-      </div>  
-    `;  
-      
-    coursesGrid.appendChild(courseCard);  
-  });  
-    
-  setupScrollAnimation();  
-}  
-  
-// NOUVELLE FONCTION : Filtrer les formations par catégorie  
-function filterCoursesByCategory(selectedCategory) {  
-  const coursesGrid = document.getElementById('coursesGrid');  
-  if (!coursesGrid) return;  
-    
-  coursesGrid.innerHTML = '';  
-    
-  // Mapper les catégories de navigation aux catégories des formations  
-  const categoryMap = {  
-    'Data Science': ['Data Science', 'Analyse de données'],  
-    'Développement web': ['Développement web'],  
-    'DevOps': ['DevOps'],  
-    'Sécurité': ['Cybersécurité']  
-  };  
-    
-  const filteredFormations = formations.filter(formation => {  
-    return categoryMap[selectedCategory]?.includes(formation.category);  
-  });  
-    
-  // Afficher les formations filtrées  
-  filteredFormations.forEach((formation, index) => {  
-    const courseCard = document.createElement('div');  
-    courseCard.className = 'course-card';  
-    courseCard.style.opacity = '0';  
-    courseCard.style.transform = 'translateY(20px)';  
-    courseCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';  
-      
-    courseCard.innerHTML = `  
-      <img src="${formation.image}" alt="${formation.title}" class="course-image">  
-      <div class="course-content">  
-        <div class="course-meta">  
-          <span class="course-category category-badge">${formation.category}</span>  
-        </div>  
-        <h3 class="course-title">${formation.title}</h3>  
-        <p class="course-description">${formation.description}</p>  
-        <p class="course-instructor">${formation.instructor}</p>  
-        <div class="course-stats">  
-          <div class="course-info">  
-            <span>⏱ ${formation.duration}</span>  
-            <span>👥 ${formation.students}</span>  
-          </div>  
-          <div class="course-rating">  
-            <span class="star">⭐</span>  
-            <span>${formation.rating}</span>  
-          </div>  
-        </div>  
-        <button class="course-button">Commencer le cours</button>  
-      </div>  
-    `;  
-      
-    coursesGrid.appendChild(courseCard);  
-  });  
-    
-  setupScrollAnimation();  
-}  
-  
-// Fonction pour afficher toutes les formations  
-function showAllCourses() {  
-  generateCourses();  
-}  
-  
-// NOUVELLE FONCTION : Configurer les filtres de catégories  
-function setupCategoryFilters() {  
-  const categoryBadges = document.querySelectorAll('.categories .category-badge');  
-    
-  categoryBadges.forEach(badge => {  
-    badge.addEventListener('click', function(e) {  
-      e.preventDefault();  
-        
-      // Retirer la classe active de tous les badges  
-      categoryBadges.forEach(b => b.classList.remove('active'));  
-        
-      // Ajouter la classe active au badge cliqué  
-      this.classList.add('active');  
-        
-      const categoryText = this.textContent.trim();  
-        
-      // Faire défiler vers la section des formations  
-      const coursesSection = document.getElementById('courses-section');  
-      if (coursesSection) {  
-        coursesSection.scrollIntoView({   
-          behavior: 'smooth',  
-          block: 'start'  
-        });  
-      }  
-        
-      // Filtrer les formations après un petit délai pour le scroll  
-      setTimeout(() => {  
-        filterCoursesByCategory(categoryText);  
-      }, 500);  
-    });  
-  });  
-}  
-  
-// Configuration de l'animation au scroll  
-function setupScrollAnimation() {  
-  const observerOptions = {  
-    threshold: 0.1,  
-    rootMargin: '0px 0px -50px 0px'  
-  };  
-    
-  const observer = new IntersectionObserver((entries) => {  
-    entries.forEach(entry => {  
-      if (entry.isIntersecting) {  
-        entry.target.style.opacity = '1';  
-        entry.target.style.transform = 'translateY(0)';  
-      }  
-    });  
-  }, observerOptions);  
-    
-  document.querySelectorAll('.course-card').forEach(card => {  
-    observer.observe(card);  
-  });  
-}  
-  
-// Gestion de l'upload CV  
-function handleFileUpload(event) {  
-  const file = event.target.files[0];  
-  if (!file) return;  
-    
-  const allowedTypes = [  
-    'application/pdf',  
-    'application/msword',  
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'  
-  ];  
-    
-  if (file.size > 5 * 1024 * 1024) {  
-    alert('Le fichier est trop volumineux (max 5MB)');  
-    return;  
-  }  
-    
-  if (!allowedTypes.includes(file.type)) {  
-    alert('Type de fichier non supporté. Utilisez PDF, DOC ou DOCX.');  
-    return;  
-  }  
-    
-  console.log('CV uploadé:', file.name);  
-  setTimeout(() => {  
-    alert(`CV "${file.name}" traité avec succès! Recommandations mises à jour.`);  
-  }, 1000);  
-}  
-  
-// Fonction de déconnexion  
-function logout() {  
-  signOut(auth).then(() => {  
-    window.location.href = "formup.html";  
-  }).catch((error) => {  
-    console.error("Erreur lors de la déconnexion:", error);  
-  });  
-}  
-  
-// Exposer les fonctions globalement  
-window.handleFileUpload = handleFileUpload;  
-window.logout = logout;  
-window.showAllCourses = showAllCourses;  
-  
-// Initialisation des événements  
-document.addEventListener('DOMContentLoaded', function() {  
-  // Gestion de l'upload CV  
-  const cvFile = document.getElementById('cvFile');  
-  if (cvFile) {  
-    cvFile.addEventListener('change', handleFileUpload);  
-  }  
-    
-  // Smooth scroll pour le bouton "Explorer les formations"  
-  const exploreBtn = document.querySelector('a[href="#courses-section"]');  
-  if (exploreBtn) {  
-    exploreBtn.addEventListener('click', function(e) {  
-      e.preventDefault();  
-      const coursesSection = document.getElementById('courses-section');  
-      if (coursesSection) {  
-        coursesSection.scrollIntoView({   
-          behavior: 'smooth',  
-          block: 'start'  
-        });  
-      }  
-    });  
-  }  
+      const coursesSection = document.getElementById('courses-section');
+      if (coursesSection) {
+        coursesSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  }
+}
+
+// Generate courses
+function generateCourses() {
+  const coursesGrid = document.getElementById('coursesGrid');
+  if (!coursesGrid) return;
+
+  coursesGrid.innerHTML = '';
+
+  formations.forEach((formation) => {
+    const courseCard = document.createElement('div');
+    courseCard.className = 'course-card';
+    courseCard.style.opacity = '0';
+    courseCard.style.transform = 'translateY(20px)';
+    courseCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+    courseCard.innerHTML = `
+      <img src="${formation.image}" alt="${formation.title}" class="course-image">
+      <div class="course-content">
+        <div class="course-meta">
+          <span class="course-category">${formation.category}</span>
+        </div>
+        <h3 class="course-title">${formation.title}</h3>
+        <p class="course-description">${formation.description}</p>
+        <p class="course-instructor">${formation.instructor}</p>
+        <div class="course-stats">
+          <div class="course-info">
+            <span>⏱ ${formation.duration}</span>
+            <span>👥 ${formation.students}</span>
+          </div>
+          <div class="course-rating">
+            <span class="star">⭐</span>
+            <span>${formation.rating}</span>
+          </div>
+        </div>
+        <button class="course-button">Commencer le cours</button>
+      </div>
+    `;
+
+    coursesGrid.appendChild(courseCard);
+  });
+
+  setupScrollAnimation();
+}
+
+// Filter courses by category
+function filterCoursesByCategory(selectedCategory) {
+  const coursesGrid = document.getElementById('coursesGrid');
+  if (!coursesGrid) return;
+
+  coursesGrid.innerHTML = '';
+
+  const categoryMap = {
+    'Data Science': ['Data Science', 'Analyse de données'],
+    'Développement web': ['Développement web'],
+    'DevOps': ['DevOps'],
+    'Sécurité': ['Cybersécurité']
+  };
+
+  const filteredFormations = formations.filter(formation => {
+    return categoryMap[selectedCategory]?.includes(formation.category);
+  });
+
+  filteredFormations.forEach((formation) => {
+    const courseCard = document.createElement('div');
+    courseCard.className = 'course-card';
+    courseCard.style.opacity = '0';
+    courseCard.style.transform = 'translateY(20px)';
+    courseCard.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+    courseCard.innerHTML = `
+      <img src="${formation.image}" alt="${formation.title}" class="course-image">
+      <div class="course-content">
+        <div class="course-meta">
+          <span class="course-category">${formation.category}</span>
+        </div>
+        <h3 class="course-title">${formation.title}</h3>
+        <p class="course-description">${formation.description}</p>
+        <p class="course-instructor">${formation.instructor}</p>
+        <div class="course-stats">
+          <div class="course-info">
+            <span>⏱ ${formation.duration}</span>
+            <span>👥 ${formation.students}</span>
+          </div>
+          <div class="course-rating">
+            <span class="star">⭐</span>
+            <span>${formation.rating}</span>
+          </div>
+        </div>
+        <button class="course-button">Commencer le cours</button>
+      </div>
+    `;
+
+    coursesGrid.appendChild(courseCard);
+  });
+
+  setupScrollAnimation();
+}
+
+// Show all courses
+function showAllCourses() {
+  generateCourses();
+}
+
+// Setup category filters
+function setupCategoryFilters() {
+  const categoryBadges = document.querySelectorAll('.categories .category-badge');
+
+  categoryBadges.forEach(badge => {
+    badge.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      categoryBadges.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+
+      const categoryText = this.textContent.trim();
+
+      const coursesSection = document.getElementById('courses-section');
+      if (coursesSection) {
+        coursesSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+
+      setTimeout(() => {
+        filterCoursesByCategory(categoryText);
+      }, 500);
+    });
+  });
+}
+
+// Setup scroll animation
+function setupScrollAnimation() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.course-card').forEach(card => {
+    observer.observe(card);
+  });
+}
+
+// Handle file upload
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const allowedTypes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ];
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert('Le fichier est trop volumineux (max 5MB)');
+    return;
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    alert('Type de fichier non supporté. Utilisez PDF, DOC ou DOCX.');
+    return;
+  }
+
+  console.log('CV uploadé:', file.name);
+  setTimeout(() => {
+    alert(`CV "${file.name}" traité avec succès! Recommandations mises à jour.`);
+  }, 1000);
+}
+
+// Logout function
+function logout() {
+  signOut(auth).then(() => {
+    window.location.href = "formup.html";
+  }).catch((error) => {
+    console.error("Error during logout:", error);
+  });
+}
+
+// Export functions for global use
+window.handleFileUpload = handleFileUpload;
+window.logout = logout;
+window.showAllCourses = showAllCourses;
+
+// Initialize events
+document.addEventListener('DOMContentLoaded', function() {
+  const cvFile = document.getElementById('cvFile');
+  if (cvFile) {
+    cvFile.addEventListener('change', handleFileUpload);
+  }
+
+  const exploreBtn = document.querySelector('a[href="#courses-section"]');
+  if (exploreBtn) {
+    exploreBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const coursesSection = document.getElementById('courses-section');
+      if (coursesSection) {
+        coursesSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  }
 });

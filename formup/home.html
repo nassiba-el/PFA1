@@ -1,632 +1,609 @@
-<!DOCTYPE html>  
-<html lang="fr">  
-<head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>FormUp - Développez vos compétences</title>  
-  <style>  
-    * {  
-      margin: 0;  
-      padding: 0;  
-      box-sizing: border-box;  
-    }  
-  
-    body {  
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;  
-      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);  
-      min-height: 100vh;  
-    }  
-  
-    /* Header */  
-    .header {  
-      background: rgba(255, 255, 255, 0.8);  
-      backdrop-filter: blur(16px);  
-      border-bottom: 1px solid #e5e7eb;  
-      position: sticky;  
-      top: 0;  
-      z-index: 50;  
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
-    }  
-  
-    .header-content {  
-      max-width: 1280px;  
-      margin: 0 auto;  
-      padding: 0 1rem;  
-      display: flex;  
-      align-items: center;  
-      justify-content: space-between;  
-      height: 64px;  
-    }  
-  
-    .logo-section {  
-      display: flex;  
-      align-items: center;  
-      gap: 1.5rem;  
-    }  
-  
-    .logo {  
-      display: flex;  
-      align-items: center;  
-      gap: 5rem;  
-    }  
-  
-    /* Logo image ajouté */
-    .logo-image {  
-      width: 100%;  
-      height: 32px;  
-      border-radius: 6px;  
-    }  
-  
-    .logo-icon {  
-      display: none; /* Cache l'ancienne icône textuelle */
-    }  
-  
-    .logo-text {  
-      font-size: 24px;  
-      font-weight: bold;  
-      color: #1F2937;  
-    }  
-  
-    .search-bar {  
-      position: relative;  
-    }  
-  
-    /* Barre de recherche minimisée */
-    .search-input {  
-      width: 150px; /* Réduit de 320px */
-      padding: 6px 10px 6px 32px; /* Réduit le padding */
-      border: 1px solid #d1d5db;  
-      border-radius: 8px;  
-      background: #f9fafb;  
-      transition: all 0.2s;  
-    }  
-  
-    .search-input:focus {  
-      outline: none;  
-      background: white;  
-      border-color: #1F2937;  
-    }  
-  
-    .search-icon {  
-      position: absolute;  
-      left: 12px;  
-      top: 50%;  
-      transform: translateY(-50%);  
-      color: #9ca3af;  
-      width: 16px;  
-      height: 16px;  
-    }  
-  
-    /* Categories and CV Upload */  
-    .nav-center {  
-      display: flex;  
-      align-items: center;  
-      gap: 1rem;  
-    }  
-  
-    .categories {  
-      display: flex;  
-      gap: 1rem;  
-      list-style: none;  
-    }  
-  
-    /* Catégories sans couleurs - style uniforme */
-    .category-badge {  
-      padding: 6px 12px;  
-      border-radius: 20px;  
-      font-size: 14px;  
-      font-weight: 500;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-      text-decoration: none;  
-      background: #f3f4f6; /* Gris neutre */
-      color: #374151;      /* Texte gris foncé */
-    }  
-  
-    .category-badge:hover {  
-      background: #e5e7eb; /* Gris plus foncé au hover */
-      transform: scale(1.05);  
-    }  
-  
-    /* CV Upload */  
-    .cv-upload {  
-      border-left: 1px solid #d1d5db;  
-      padding-left: 1rem;  
-    }  
-  
-    .cv-upload-btn {  
-      display: flex;  
-      align-items: center;  
-      gap: 0.5rem;  
-      padding: 8px 16px;  
-      background: #333;  
-      color: white;  
-      border: none;  
-      border-radius: 8px;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-      font-size: 14px;  
-      font-weight: 500;  
-    }  
-  
-    .cv-upload-btn:hover {  
-      background: #4e4e4e;  
-    }  
-  
-    .cv-file-input {  
-      display: none;  
-    }  
-  
-    /* User Menu */  
-    .user-menu {  
-      position: relative;  
-    }  
-  
-    .user-button {  
-      display: flex;  
-      align-items: center;  
-      gap: 0.5rem;  
-      padding: 4px 8px;  
-      border: none;  
-      background: none;  
-      cursor: pointer;  
-      border-radius: 8px;  
-      transition: background 0.2s;  
-    }  
-  
-    .user-button:hover {  
-      background: #f3f4f6;  
-    }  
-  
-    .user-avatar {  
-      width: 32px;  
-      height: 32px;  
-      background: #1F2937;  
-      border-radius: 50%;  
-      display: flex;  
-      align-items: center;  
-      justify-content: center;  
-      color: white;  
-      font-size: 12px;  
-      font-weight: 500;  
-    }  
-  
-    /* Hero Section */  
-    .hero {  
-      padding: 80px 1rem;  
-      text-align: center;  
-    }  
-  
-    .hero-content {  
-      max-width: 1280px;  
-      margin: 0 auto;  
-    }  
-  
-    .hero-title {  
-      font-size: clamp(2.5rem, 6vw, 4rem);  
-      font-weight: bold;  
-      color: #111827;  
-      margin-bottom: 1.5rem;  
-      line-height: 1.1;  
-    }  
-  
-    .hero-gradient {  
-      color: #1F2937;  
-    }  
-  
-    .hero-description {  
-      font-size: 1.25rem;  
-      color: #6b7280;  
-      margin-bottom: 2rem;  
-      max-width: 768px;  
-      margin-left: auto;  
-      margin-right: auto;  
-    }  
-  
-    .hero-buttons {  
-      display: flex;  
-      flex-wrap: wrap;  
-      gap: 1rem;  
-      justify-content: center;  
-      margin-bottom: 3rem;  
-    }  
-  
-    .btn-primary {  
-      display: flex;  
-      align-items: center;  
-      gap: 0.5rem;  
-      padding: 12px 32px;  
-      background: #333;  
-      color: white;  
-      border: none;  
-      border-radius: 8px;  
-      font-size: 16px;  
-      font-weight: 600;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-      text-decoration: none;  
-    }  
-  
-    .btn-primary:hover {  
-      background: #4e4e4e;  
-    }  
-  
-    .btn-outline {  
-      padding: 12px 32px;  
-      background: transparent;  
-      color: #374151;  
-      border: 1px solid #d1d5db;  
-      border-radius: 8px;  
-      font-size: 16px;  
-      font-weight: 600;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-      text-decoration: none;  
-    }  
-  
-    .btn-outline:hover {  
-      background: #f9fafb;  
-      border-color: #9ca3af;  
-    }  
-  
-    /* Courses Section */  
-    .courses-section {  
-      padding: 4rem 1rem;  
-      background: white;  
-    }  
-  
-    .courses-content {  
-      max-width: 1280px;  
-      margin: 0 auto;  
-    }  
-  
-    .courses-header {  
-      text-align: center;  
-      margin-bottom: 3rem;  
-    }  
-  
-    .courses-title {  
-      display: flex;  
-      align-items: center;  
-      justify-content: center;  
-      gap: 0.75rem;  
-      font-size: 2.5rem;  
-      font-weight: bold;  
-      color: #111827;  
-      margin-bottom: 1rem;  
-    }  
-  
-    .courses-description {  
-      font-size: 1.25rem;  
-      color: #6b7280;  
-      max-width: 512px;  
-      margin: 0 auto;  
-    }  
-  
-    /* Course Grid */  
-    .courses-grid {  
-      display: grid;  
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));  
-      gap: 2rem;  
-      margin-bottom: 3rem;  
-    }  
-  
-    .course-card {  
-      background: white;  
-      border-radius: 12px;  
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
-      overflow: hidden;  
-      transition: all 0.3s;  
-      border: 1px solid #f3f4f6;  
-    }  
-  
-    .course-card:hover {  
-      transform: translateY(-8px);  
-      box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);  
-    }  
-  
-    .course-image {  
-      width: 100%;  
-      height: 192px;  
-      object-fit: cover;  
-    }  
-  
-    .course-content {  
-      padding: 1.5rem;  
-    }  
-  
-    .course-meta {  
-      display: flex;  
-      justify-content: flex-start;  
-      align-items: center;  
-      margin-bottom: 0.5rem;  
-    }  
-  
-    .course-category {  
-      padding: 4px 8px;  
-      border-radius: 12px;  
-      font-size: 12px;  
-      font-weight: 500;  
-    }  
-  
-    .course-title {  
-      font-size: 20px;  
-      font-weight: bold;  
-      color: #111827;  
-      margin-bottom: 0.5rem;  
-      line-height: 1.3;  
-    }  
-  
-    .course-description {  
-      color: #6b7280;  
-      font-size: 14px;  
-      margin-bottom: 1rem;  
-      line-height: 1.5;  
-    }  
-  
-    .course-instructor {  
-      font-size: 14px;  
-      color: #374151;  
-      font-weight: 500;  
-      margin-bottom: 1rem;  
-    }  
-  
-    .course-stats {  
-      display: flex;  
-      justify-content: space-between;  
-      align-items: center;  
-      margin-bottom: 1rem;  
-      font-size: 14px;  
-      color: #6b7280;  
-    }  
-  
-    .course-info {  
-      display: flex;  
-      gap: 1rem;  
-    }  
-  
-    .course-rating {  
-      display: flex;  
-      align-items: center;  
-      gap: 0.25rem;  
-    }  
-  
-    .star {  
-      color: #fbbf24;  
-    }  
-  
-    .course-button {  
-      width: 100%;  
-      padding: 12px;  
-      background: #333;  
-      color: white;  
-      border: none;  
-      border-radius: 8px;  
-      font-weight: 600;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-    }  
-  
-    .course-button:hover {  
-      background: #4e4e4e;  
-    }  
-  
-    .view-all-btn {  
-      display: block;  
-      margin: 0 auto;  
-      padding: 12px 32px;  
-      background: #333;  
-      color: white;  
-      border: none;  
-      border-radius: 8px;  
-      font-size: 16px;  
-      font-weight: 600;  
-      cursor: pointer;  
-      transition: all 0.2s;  
-      text-decoration: none;  
-    }  
-  
-    .view-all-btn:hover {  
-      background: #4e4e4e;  
-      transform: scale(1.05);  
-    }  
-  
-    /* Responsive */  
-    @media (max-width: 768px) {  
-      .header-content {  
-        flex-wrap: wrap;  
-        height: auto;  
-        padding: 1rem;  
-      }  
-  
-      .logo-section {  
-        flex-direction: column;  
-        align-items: flex-start;  
-        gap: 1rem;  
-      }  
-  
-      .search-input {  
-        width: 180px; /* Réduit pour mobile */
-      }  
-  
-      .nav-center {  
-        order: 3;  
-        width: 100%;  
-        margin-top: 1rem;  
-        flex-direction: column;  
-        gap: 1rem;  
-      }  
-  
-      .categories {  
-        flex-wrap: wrap;  
-        justify-content: center;  
-      }  
-  
-      .hero {  
-        padding: 40px 1rem;  
-      }  
-  
-      .hero-buttons {  
-        flex-direction: column;  
-        align-items: center;  
-      }  
-  
-      .courses-grid {  
-        grid-template-columns: 1fr;  
-      }  
-    }  
-  </style>  
-=======
-  <link rel="stylesheet" href="home.css">  
->>>>>>> bb8f5bdf3d43f27e619be28cb2bd68ed3bb0aada
-</head>  
-<body>  
-  <!-- Header -->  
-  <header class="header">  
-    <div class="header-content">  
-      <!-- Logo et recherche -->  
-      <div class="logo-section">  
-        <div class="logo">  
-          <a href="#" id="logoLink">  
-            <img src="formup.png" alt="FormUp Logo" class="logo-image">  
-          </a>  
-        </div>  
-            
-        <div class="search-bar">  
-          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">  
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0z"/>  
-          </svg>  
-          <input type="text" class="search-input" placeholder="Rechercher une formation...">  
-        </div>  
-      </div>  
-  
-      <!-- Catégories et Upload CV -->  
-      <div class="nav-center">  
-        <ul class="categories">  
-          <li><a href="#" class="category-badge">Data Science</a></li>  
-          <li><a href="#" class="category-badge">Développement web</a></li>  
-          <li><a href="#" class="category-badge">DevOps</a></li>  
-          <li><a href="#" class="category-badge">Sécurité</a></li>  
-        </ul>  
-            
-        <div class="cv-upload">  
-          <input type="file" id="cvFile" class="cv-file-input" accept=".pdf,.doc,.docx">  
-          <label for="cvFile" class="cv-upload-btn">  
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>  
-              <polyline points="7,10 12,15 17,10"/>  
-              <line x1="12" y1="15" x2="12" y2="3"/>  
-            </svg>  
-            Upload CV  
-          </label>  
-        </div>  
-      </div>  
-  
-      <!-- Menu utilisateur -->  
-      <div class="user-menu">  
-        <button class="user-button" id="userAvatar">  
-          <div class="user-avatar" id="userInitial">U</div>  
-          <span id="userName">Utilisateur</span>  
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-            <polyline points="6,9 12,15 18,9"/>  
-          </svg>  
-        </button>  
-        <div class="dropdown-content" id="userDropdown">  
-  <div class="user-profile-header">  
-    <div class="user-avatar-large" id="userAvatarLarge">U</div>  
-    <div class="user-info">  
-      <p class="user-full-name" id="userFullName">Nom complet</p>  
-      <p class="user-email" id="userEmail">email@example.com</p>  
-    </div>  
-  </div>  
-    
-  <div class="dropdown-divider"></div>  
-    
-  <div class="dropdown-menu-items">  
-    <a href="#" class="dropdown-item" id="profileLink">  
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>  
-        <circle cx="12" cy="7" r="4"/>  
-      </svg>  
-      Mon Profil  
-    </a>  
-      
-    <a href="#" class="dropdown-item" id="settingsLink">  
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-        <circle cx="12" cy="12" r="3"/>  
-        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>  
-      </svg>  
-      Paramètres  
-    </a>  
-      
-    <a href="#" class="dropdown-item" id="achievementsLink">  
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-        <path d="M6 9l6 6 6-6"/>  
-        <path d="M12 3v18"/>  
-      </svg>  
-      Accomplissements  
-    </a>  
-      
-    <div class="dropdown-divider"></div>  
-      
-    <button class="dropdown-item logout-btn" onclick="logout()">  
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>  
-        <polyline points="16,17 21,12 16,7"/>  
-        <line x1="21" y1="12" x2="9" y2="12"/>  
-      </svg>  
-      Déconnexion  
-    </button>  
-  </div>  
-</div>  
-      </div>  
-    </div>  
-  </header>  
-  
-  <!-- Hero Section -->  
-  <section class="hero">  
-    <div class="hero-content">  
-      <h1 class="hero-title">  
-        Développez vos <span class="hero-gradient">compétences</span> avec FormUp  
-      </h1>  
-      <p class="hero-description">  
-        Découvrez des formations personnalisées adaptées à votre profil.   
-        Uploadez votre CV et recevez des recommandations sur mesure pour booster votre carrière.  
-      </p>  
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FormUp - Développez vos compétences</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+    }
+
+    .logo-image {
+      width: 100%;
+      height: 32px;
+      border-radius: 6px;
+    }
+
+    .logo-icon {
+      display: none;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1F2937;
+    }
+
+    .search-bar {
+      position: relative;
+    }
+
+    .search-input {
+      width: 150px;
+      padding: 6px 10px 6px 32px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #f9fafb;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      background: white;
+      border-color: #1F2937;
+      width: 200px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* User Menu */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 4px 8px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .user-button:hover {
+      background: #f3f4f6;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      background: #1F2937;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Dropdown Menu */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 0.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      width: 260px;
+      z-index: 50;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .user-profile-header {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-avatar-large {
+      width: 48px;
+      height: 48px;
+      background: #1F2937;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-full-name {
+      font-weight: 500;
+      color: #1F2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .user-email {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .dropdown-menu-items {
+      padding: 0.5rem 0;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: #374151;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      font-size: 0.875rem;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f3f4f6;
+    }
+
+    .dropdown-item svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 0.75rem;
+      color: #6b7280;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: #e5e7eb;
+      margin: 0.5rem 0;
+    }
+
+    .logout-btn {
+      width: 100%;
+      text-align: left;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background-color: #fef2f2;
+    }
+
+    /* Categories and CV Upload */
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .categories {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .category-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .category-badge:hover,
+    .category-badge.active {
+      background: #e5e7eb;
+      transform: scale(1.05);
+    }
+
+    .cv-upload {
+      border-left: 1px solid #d1d5db;
+      padding-left: 1rem;
+    }
+
+    .cv-upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 8px 16px;
+      background: #1F2937;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .cv-upload-btn:hover {
+      background: #374151;
+    }
+
+    .cv-file-input {
+      display: none;
+    }
+
+    /* Courses Section */
+    .courses-section {
+      padding: 4rem 1rem;
+      background: white;
+      margin-top: 2rem;
+    }
+
+    .courses-content {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .courses-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .courses-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .courses-description {
+      font-size: 1.25rem;
+      color: #6b7280;
+      max-width: 768px;
+      margin: 0 auto;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 1px solid #f3f4f6;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-image {
+      width: 100%;
+      height: 192px;
+      object-fit: cover;
+    }
+
+    .course-content {
+      padding: 1.5rem;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .course-category {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .course-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #111827;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .course-description {
+      color: #6b7280;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .course-instructor {
+      font-size: 0.875rem;
+      color: #374151;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .course-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .course-info {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .course-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .star {
+      color: #fbbf24;
+    }
+
+    .course-button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #1F2937;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .course-button:hover {
+      background: #374151;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 1rem;
+      }
+
+      .logo-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+
+      .nav-center {
+        order: 3;
+        width: 100%;
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .categories {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cv-upload {
+        border-left: none;
+        padding-left: 0;
+        width: 100%;
+      }
+
+      .cv-upload-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">
+          <a href="#" id="logoLink">
+            <img src="formup.png" alt="FormUp Logo" class="logo-image">
+          </a>
+        </div>
+        
+        <div class="search-bar">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0z"/>
+          </svg>
+          <input type="text" class="search-input" placeholder="Rechercher une formation...">
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <ul class="categories">
+          <li><a href="#" class="category-badge">Data Science</a></li>
+          <li><a href="#" class="category-badge">Développement web</a></li>
+          <li><a href="#" class="category-badge">DevOps</a></li>
+          <li><a href="#" class="category-badge">Sécurité</a></li>
+        </ul>
+        
+        <div class="cv-upload">
+          <input type="file" id="cvFile" class="cv-file-input" accept=".pdf,.doc,.docx">
+          <label for="cvFile" class="cv-upload-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Upload CV
+          </label>
+        </div>
+      </div>
+
+      <div class="user-menu">
+        <button class="user-button" id="userAvatar">
+          <div class="user-avatar" id="userInitial">U</div>
+          <span id="userName">Utilisateur</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <polyline points="6,9 12,15 18,9"/>
+          </svg>
+        </button>
+        
+        <div class="dropdown-content" id="userDropdown">
+          <div class="user-profile-header">
+            <div class="user-avatar-large" id="userAvatarLarge">U</div>
+            <div class="user-info">
+              <p class="user-full-name" id="userFullName">Nom complet</p>
+              <p class="user-email" id="userEmail">email@example.com</p>
+            </div>
+          </div>
           
-      <div class="hero-buttons">  
-        <a href="#" class="btn-primary">  
-          Commencer maintenant  
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
-            <line x1="5" y1="12" x2="19" y2="12"/>  
-            <polyline points="12,5 19,12 12,19"/>  
-          </svg>  
-        </a>  
-        <a href="#courses-section" class="btn-outline">Explorer les formations</a>  
-      </div>  
-    </div>  
-  </section>  
-  
-  <!-- Formations Recommandées -->  
-  <section class="courses-section" id="courses-section">  
-    <div class="courses-content">  
-      <div class="courses-header">  
-        <h2 class="courses-title">  
-          💻 Formations Informatiques  
-        </h2>  
-        <p class="courses-description">  
-          Découvrez une sélection de formations spécialisées en informatique adaptées aux tendances du marché  
-        </p>  
-      </div>  
-  
-      <div class="courses-grid" id="coursesGrid">  
-        <!-- Les formations seront générées dynamiquement par JavaScript -->  
-      </div>  
-  
-      <a href="#" class="view-all-btn" onclick="showAllCourses()">Voir toutes les formations</a>  
-    </div>  
-  </section>  
-  
-  <script type="module" src="home.js"></script>  
-</body>  
+          <div class="dropdown-menu-items">
+            <a href="#" class="dropdown-item" id="profileLink">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              Mon Profil
+            </a>
+            
+            <a href="#" class="dropdown-item" id="settingsLink">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              Paramètres
+            </a>
+            
+            <a href="#" class="dropdown-item" id="achievementsLink">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="8" r="7"/>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+              </svg>
+              Accomplissements
+            </a>
+            
+            <a href="#" class="dropdown-item" id="helpLink">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Centre d'aide
+            </a>
+            
+            <div class="dropdown-divider"></div>
+            
+            <button class="dropdown-item logout-btn" onclick="logout()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16,17 21,12 16,7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="courses-section" id="courses-section">
+    <div class="courses-content">
+      <div class="courses-header">
+        <h2 class="courses-title">
+          💻 Formations Informatiques
+        </h2>
+        <p class="courses-description">
+          Découvrez une sélection de formations spécialisées en informatique adaptées aux tendances du marché
+        </p>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid">
+        <!-- Les formations seront générées dynamiquement par JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="home.js"></script>
+</body>
 </html>
