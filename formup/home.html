@@ -4,6 +4,7 @@
   <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>FormUp - Développez vos compétences</title>  
+<<<<<<< HEAD
   <style>  
     * {  
       margin: 0;  
@@ -476,6 +477,9 @@
       }  
     }  
   </style>  
+=======
+  <link rel="stylesheet" href="home.css">  
+>>>>>>> bb8f5bdf3d43f27e619be28cb2bd68ed3bb0aada
 </head>  
 <body>  
   <!-- Header -->  
@@ -484,9 +488,11 @@
       <!-- Logo et recherche -->  
       <div class="logo-section">  
         <div class="logo">  
-          <img src="formup.png" alt="FormUp Logo" class="logo-image">
+          <a href="#" id="logoLink">  
+            <img src="formup.png" alt="FormUp Logo" class="logo-image">  
+          </a>  
         </div>  
-          
+            
         <div class="search-bar">  
           <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">  
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0z"/>  
@@ -498,13 +504,13 @@
       <!-- Catégories et Upload CV -->  
       <div class="nav-center">  
         <ul class="categories">  
-          <li><a href="#" class="category-badge">Développement</a></li>  
           <li><a href="#" class="category-badge">Data Science</a></li>  
-          <li><a href="#" class="category-badge">Cyber Security</a></li>  
-          <li><a href="#" class="category-badge">Blockchain</a></li>  
+          <li><a href="#" class="category-badge">Développement web</a></li>  
+          <li><a href="#" class="category-badge">DevOps</a></li>  
+          <li><a href="#" class="category-badge">Sécurité</a></li>  
         </ul>  
-          
-        <div class="cv-upload">
+            
+        <div class="cv-upload">  
           <input type="file" id="cvFile" class="cv-file-input" accept=".pdf,.doc,.docx">  
           <label for="cvFile" class="cv-upload-btn">  
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
@@ -519,13 +525,61 @@
   
       <!-- Menu utilisateur -->  
       <div class="user-menu">  
-        <button class="user-button">  
-          <div class="user-avatar">U</div>  
-          <span>Utilisateur</span>  
+        <button class="user-button" id="userAvatar">  
+          <div class="user-avatar" id="userInitial">U</div>  
+          <span id="userName">Utilisateur</span>  
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
             <polyline points="6,9 12,15 18,9"/>  
           </svg>  
         </button>  
+        <div class="dropdown-content" id="userDropdown">  
+  <div class="user-profile-header">  
+    <div class="user-avatar-large" id="userAvatarLarge">U</div>  
+    <div class="user-info">  
+      <p class="user-full-name" id="userFullName">Nom complet</p>  
+      <p class="user-email" id="userEmail">email@example.com</p>  
+    </div>  
+  </div>  
+    
+  <div class="dropdown-divider"></div>  
+    
+  <div class="dropdown-menu-items">  
+    <a href="#" class="dropdown-item" id="profileLink">  
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>  
+        <circle cx="12" cy="7" r="4"/>  
+      </svg>  
+      Mon Profil  
+    </a>  
+      
+    <a href="#" class="dropdown-item" id="settingsLink">  
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+        <circle cx="12" cy="12" r="3"/>  
+        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>  
+      </svg>  
+      Paramètres  
+    </a>  
+      
+    <a href="#" class="dropdown-item" id="achievementsLink">  
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+        <path d="M6 9l6 6 6-6"/>  
+        <path d="M12 3v18"/>  
+      </svg>  
+      Accomplissements  
+    </a>  
+      
+    <div class="dropdown-divider"></div>  
+      
+    <button class="dropdown-item logout-btn" onclick="logout()">  
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>  
+        <polyline points="16,17 21,12 16,7"/>  
+        <line x1="21" y1="12" x2="9" y2="12"/>  
+      </svg>  
+      Déconnexion  
+    </button>  
+  </div>  
+</div>  
       </div>  
     </div>  
   </header>  
@@ -540,7 +594,7 @@
         Découvrez des formations personnalisées adaptées à votre profil.   
         Uploadez votre CV et recevez des recommandations sur mesure pour booster votre carrière.  
       </p>  
-        
+          
       <div class="hero-buttons">  
         <a href="#" class="btn-primary">  
           Commencer maintenant  
@@ -549,13 +603,13 @@
             <polyline points="12,5 19,12 12,19"/>  
           </svg>  
         </a>  
-        <a href="#" class="btn-outline">Explorer les formations</a>  
+        <a href="#courses-section" class="btn-outline">Explorer les formations</a>  
       </div>  
     </div>  
   </section>  
   
   <!-- Formations Recommandées -->  
-  <section class="courses-section">  
+  <section class="courses-section" id="courses-section">  
     <div class="courses-content">  
       <div class="courses-header">  
         <h2 class="courses-title">  
@@ -566,203 +620,14 @@
         </p>  
       </div>  
   
-      <div class="courses-grid">  
-        <!-- Course 1 - Développement -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=200&fit=crop" alt="React & TypeScript" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Développement</span>  
-            </div>  
-            <h3 class="course-title">React and TypeScript Mastery</h3>  
-            <p class="course-description">  
-              Maîtrisez React et TypeScript pour créer des applications web modernes et robustes.  
-            </p>  
-            <p class="course-instructor">Marie Dubois</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 24 heures</span>  
-                <span>👥 1,200</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.8</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
-  
-        <!-- Course 2 - Data Science -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&h=200&fit=crop" alt="Python Data Science" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Data Science</span>  
-            </div>  
-            <h3 class="course-title">Python pour Data Science</h3>  
-            <p class="course-description">  
-              Maîtrisez Python et ses bibliothèques pour l'analyse de données et le machine learning.  
-            </p>  
-            <p class="course-instructor">Thomas Roux</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 28 heures</span>  
-                <span>👥 1,456</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.9</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
-  
-        <!-- Course 3 - Cyber Security -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=200&fit=crop" alt="Cyber Security" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Cyber Security</span>  
-            </div>  
-            <h3 class="course-title">Sécurité Informatique and Ethical Hacking</h3>  
-            <p class="course-description">  
-              Apprenez les techniques de sécurité informatique et de test de pénétration éthique.  
-            </p>  
-            <p class="course-instructor">Sophie Bernard</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 32 heures</span>  
-                <span>👥 645</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.7</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
-  
-        <!-- Course 4 - Blockchain -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=200&fit=crop" alt="Blockchain" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Blockchain</span>  
-            </div>  
-            <h3 class="course-title">Développement Blockchain and Smart Contracts</h3>  
-            <p class="course-description">  
-              Créez des applications décentralisées et des smart contracts sur Ethereum.  
-            </p>  
-            <p class="course-instructor">Julie Lefebvre</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 20 heures</span>  
-                <span>👥 1,024</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.8</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
-  
-        <!-- Course 5 - Développement Mobile -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=200&fit=crop" alt="Mobile Development" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Développement</span>  
-            </div>  
-            <h3 class="course-title">Développement Mobile React Native</h3>  
-            <p class="course-description">  
-              Développez des applications mobiles cross-platform avec React Native.  
-            </p>  
-            <p class="course-instructor">Pierre Martin</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 25 heures</span>  
-                <span>👥 856</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.6</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
-  
-        <!-- Course 6 - Intelligence Artificielle -->  
-        <div class="course-card">  
-          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=200&fit=crop" alt="AI Machine Learning" class="course-image">  
-          <div class="course-content">  
-            <div class="course-meta">  
-              <span class="course-category category-badge">Data Science</span>  
-            </div>  
-            <h3 class="course-title">Intelligence Artificielle and Machine Learning</h3>  
-            <p class="course-description">  
-              Explorez les algorithmes d'IA et créez vos propres modèles de machine learning.  
-            </p>  
-            <p class="course-instructor">Anne Moreau</p>  
-            <div class="course-stats">  
-              <div class="course-info">  
-                <span>⏱ 35 heures</span>  
-                <span>👥 789</span>  
-              </div>  
-              <div class="course-rating">  
-                <span class="star">⭐</span>  
-                <span>4.9</span>  
-              </div>  
-            </div>  
-            <button class="course-button">Commencer le cours</button>  
-          </div>  
-        </div>  
+      <div class="courses-grid" id="coursesGrid">  
+        <!-- Les formations seront générées dynamiquement par JavaScript -->  
       </div>  
   
-      <a href="#" class="view-all-btn">Voir toutes les formations</a>  
+      <a href="#" class="view-all-btn" onclick="showAllCourses()">Voir toutes les formations</a>  
     </div>  
   </section>  
   
-  <script>  
-    // Gestion de l'upload CV  
-    document.getElementById('cvFile').addEventListener('change', function(event) {  
-      const file = event.target.files[0];  
-      if (file) {  
-        console.log('CV uploadé:', file.name);  
-        // Simulation du traitement du CV  
-        setTimeout(() => {  
-          alert(`CV "${file.name}" traité avec succès! Recommandations mises à jour.`);  
-        }, 1000);  
-      }  
-    });  
-  
-    // Animation au scroll  
-    const observerOptions = {  
-      threshold: 0.1,  
-      rootMargin: '0px 0px -50px 0px'  
-    };  
-  
-    const observer = new IntersectionObserver((entries) => {  
-      entries.forEach(entry => {  
-        if (entry.isIntersecting) {  
-          entry.target.style.opacity = '1';  
-          entry.target.style.transform = 'translateY(0)';  
-        }  
-      });  
-    }, observerOptions);  
-  
-    // Observer les cartes de cours  
-    document.querySelectorAll('.course-card').forEach(card => {  
-      card.style.opacity = '0';  
-      card.style.transform = 'translateY(20px)';  
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';  
-      observer.observe(card);  
-    });  
-  </script>  
+  <script type="module" src="home.js"></script>  
 </body>  
 </html>
