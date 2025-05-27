@@ -70,67 +70,90 @@ function setupNavigation() {
   });  
 }  
   
-// Configuration des FAQ accordéons  
-function setupFAQ() {  
-  const faqItems = document.querySelectorAll('.faq-item');  
-    
-  faqItems.forEach(item => {  
-    const question = item.querySelector('.faq-question');  
+// Configuration des FAQ accordéons    
+function setupFAQ() {    
+  const faqItems = document.querySelectorAll('.faq-item');    
       
-    question.addEventListener('click', () => {  
-      const isOpen = item.classList.contains('open');  
+  faqItems.forEach(item => {    
+    const question = item.querySelector('.faq-question');    
         
-      // Fermer tous les autres items  
-      faqItems.forEach(otherItem => {  
-        otherItem.classList.remove('open');  
-      });  
-        
-      // Ouvrir/fermer l'item cliqué  
-      if (!isOpen) {  
-        item.classList.add('open');  
-      }  
-    });  
-  });  
+    question.addEventListener('click', () => {    
+      const isOpen = item.classList.contains('active'); // Changé de 'open' à 'active'  
+          
+      // Fermer tous les autres items    
+      faqItems.forEach(otherItem => {    
+        otherItem.classList.remove('active'); // Changé de 'open' à 'active'  
+      });    
+          
+      // Ouvrir/fermer l'item cliqué    
+      if (!isOpen) {    
+        item.classList.add('active'); // Changé de 'open' à 'active'  
+      }    
+    });    
+  });    
 }  
   
-// Configuration de la recherche  
-function setupSearch() {  
-  const searchInput = document.getElementById('searchInput');  
-  const faqItems = document.querySelectorAll('.faq-item');  
+// Configuration de la recherche CORRIGÉE  
+function setupSearch() {    
+  const searchInput = document.getElementById('searchInput');    
+  const faqItems = document.querySelectorAll('.faq-item');    
     
-  searchInput.addEventListener('input', (e) => {  
-    const searchTerm = e.target.value.toLowerCase();  
-      
-    if (searchTerm === '') {  
-      // Afficher tous les items si la recherche est vide  
-      faqItems.forEach(item => {  
-        item.style.display = 'block';  
+  // Sauvegarder le contenu original de chaque item  
+  const originalContent = new Map();  
+  faqItems.forEach(item => {  
+    const question = item.querySelector('.faq-question h3');  
+    const answer = item.querySelector('.faq-answer');  
+    if (question && answer) {  
+      originalContent.set(item, {  
+        question: question.textContent,  
+        answer: answer.textContent  
       });  
-      return;  
-    }  
-      
-    // Filtrer les FAQ selon le terme de recherche  
-    faqItems.forEach(item => {  
-      const question = item.querySelector('.faq-question h3').textContent.toLowerCase();  
-      const answer = item.querySelector('.faq-answer').textContent.toLowerCase();  
-        
-      if (question.includes(searchTerm) || answer.includes(searchTerm)) {  
-        item.style.display = 'block';  
-        // Surligner le terme recherché  
-        highlightSearchTerm(item, searchTerm);  
-      } else {  
-        item.style.display = 'none';  
-      }  
-    });  
-    // Basculer automatiquement vers la section FAQ lors de la recherche  
-    if (searchTerm !== '') {  
-      const faqButton = document.querySelector('[data-section="faq"]');  
-      if (faqButton && !faqButton.classList.contains('active')) {  
-        faqButton.click();  
-      }  
     }  
   });  
-}  
+      
+  searchInput.addEventListener('input', (e) => {    
+    const searchTerm = e.target.value.toLowerCase().trim();    
+        
+    if (searchTerm === '') {    
+      // Restaurer le contenu original et afficher tous les items  
+      faqItems.forEach(item => {    
+        item.style.display = 'block';  
+        const original = originalContent.get(item);  
+        if (original) {  
+          const question = item.querySelector('.faq-question h3');  
+          const answer = item.querySelector('.faq-answer');  
+          if (question) question.textContent = original.question;  
+          if (answer) answer.textContent = original.answer;  
+        }  
+      });    
+      return;    
+    }    
+        
+    // Filtrer les FAQ selon le terme de recherche    
+    faqItems.forEach(item => {    
+      const original = originalContent.get(item);  
+      if (!original) return;  
+        
+      const question = original.question.toLowerCase();    
+      const answer = original.answer.toLowerCase();    
+          
+      if (question.includes(searchTerm) || answer.includes(searchTerm)) {    
+        item.style.display = 'block';    
+        highlightSearchTerm(item, searchTerm);    
+      } else {    
+        item.style.display = 'none';    
+      }    
+    });    
+      
+    // Basculer automatiquement vers la section FAQ lors de la recherche    
+    if (searchTerm !== '') {    
+      const faqButton = document.querySelector('[data-section="faq"]');    
+      if (faqButton && !faqButton.classList.contains('active')) {    
+        faqButton.click();    
+      }    
+    }    
+  });    
+}
   
 // Fonction pour surligner les termes de recherche  
 function highlightSearchTerm(item, searchTerm) {  

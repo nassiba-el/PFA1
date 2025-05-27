@@ -33,7 +33,7 @@
         </ul>
         
         <div class="cv-upload">
-          <input type="file" id="cvFile" class="cv-file-input" accept=".pdf,.doc,.docx">
+          <input type="file" id="cvFile" class="cv-file-input" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
           <label for="cvFile" class="cv-upload-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -99,7 +99,7 @@
             
             <div class="dropdown-divider"></div>
             
-            <button class="dropdown-item logout-btn" onclick="logout()">
+            <button class="dropdown-item logout-btn" id="logoutBtn" onclick="logout()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 <polyline points="16,17 21,12 16,7"/>
@@ -112,6 +112,30 @@
       </div>
     </div>
   </header>
+
+  <section class="hero">  
+  <img class="hero-background" src="image.jpg" alt="Formation background">  
+  <div class="hero-overlay"></div>  
+  <div class="hero-content">  
+    <h1 class="hero-title">  
+      Une seule recherche. Des milliers de formations.  
+    </h1>  
+    <p class="hero-description">  
+      Les bonnes recommandations, au bon moment. Découvrez des formations adaptées à vos besoins et boostez votre carrière.  
+    </p>  
+      
+    <div class="hero-buttons">  
+      <a href="#" class="btn-primary">  
+        Commencer maintenant  
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">  
+          <line x1="5" y1="12" x2="19" y2="12"/>  
+          <polyline points="12,5 19,12 12,19"/>  
+        </svg>  
+      </a>  
+      <a href="#courses-section" class="btn-outline" id="exploreFormationsBtn">Explorer les formations</a>  
+    </div>  
+  </div>  
+</section>
 
   <section class="courses-section" id="courses-section">
     <div class="courses-content">

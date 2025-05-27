@@ -21,6 +21,100 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
+    /* Hero Section */  
+.hero {  
+  padding: 80px 1rem;  
+  text-align: center;  
+  position: relative;  
+  min-height: 60vh;  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+}  
+  
+.hero-background {  
+  position: absolute;  
+  width: 100%;  
+  height: 120vh;  
+  object-fit: cover;  
+}  
+  
+.hero-overlay {  
+  position: absolute;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background: rgba(0, 0, 0, 0.5);  
+  z-index: -1;  
+}  
+  
+.hero-content {  
+  max-width: 800px;  
+  margin: 0 auto;  
+  color: white;  
+  z-index: 1;  
+}  
+  
+.hero-title {  
+  font-size: clamp(2rem, 5vw, 3.5rem);  
+  font-weight: bold;  
+  margin-bottom: 1.5rem;  
+  line-height: 1.1;  
+}  
+  
+.hero-description {  
+  font-size: 1.25rem;  
+  margin-bottom: 2rem;  
+  opacity: 0.9;  
+}  
+  
+.hero-buttons {  
+  display: flex;  
+  flex-wrap: wrap;  
+  gap: 1rem;  
+  justify-content: center;  
+}  
+  
+.btn-primary {  
+  display: flex;  
+  align-items: center;  
+  gap: 0.5rem;  
+  padding: 12px 32px;  
+  background: #333;  
+  color: white;  
+  border: none;  
+  border-radius: 8px;  
+  font-size: 16px;  
+  font-weight: 600;  
+  cursor: pointer;  
+  transition: all 0.2s;  
+  text-decoration: none;  
+}  
+  
+.btn-primary:hover {  
+  background: #4e4e4e;  
+  transform: translateY(-2px);  
+}  
+  
+.btn-outline {  
+  padding: 12px 32px;  
+  background: transparent;  
+  color: white;  
+  border: 2px solid white;  
+  border-radius: 8px;  
+  font-size: 16px;  
+  font-weight: 600;  
+  cursor: pointer;  
+  transition: all 0.2s;  
+  text-decoration: none;  
+}  
+  
+.btn-outline:hover {  
+  background: white;  
+  color: #333;  
+}
+
     .header-content {
       max-width: 1280px;
       margin: 0 auto;
@@ -287,7 +381,7 @@
     .courses-section {
       padding: 4rem 1rem;
       background: white;
-      margin-top: 2rem;
+      margin-top: 6rem;
     }
 
     .courses-content {

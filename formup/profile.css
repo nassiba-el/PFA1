@@ -31,9 +31,24 @@ body {
   height: 64px;  
 }  
   
+.logo-section {  
+  display: flex;  
+  align-items: center;  
+}  
+  
+.logo {  
+  display: flex;  
+  align-items: center;  
+}  
+  
 .logo-image {  
   height: 32px;  
   border-radius: 6px;  
+}  
+  
+.back-button {  
+  display: flex;  
+  align-items: center;  
 }  
   
 .btn-back {  
@@ -59,7 +74,7 @@ body {
 .profile-container {  
   max-width: 800px;  
   margin: 2rem auto;  
-  padding: 0 1rem;  
+  padding: 0 1rem 120px; /* Espace pour la barre en bas */  
 }  
   
 .profile-content {  
@@ -69,6 +84,7 @@ body {
   overflow: hidden;  
 }  
   
+/* Profile Header */  
 .profile-header {  
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
   color: white;  
@@ -93,155 +109,401 @@ body {
 .profile-header h1 {  
   font-size: 28px;  
   margin-bottom: 0.5rem;  
+  font-weight: 700;  
 }  
   
-.profile-subtitle {  
+.profile-header p {  
   opacity: 0.9;  
   font-size: 16px;  
+  font-weight: 400;  
 }  
   
-/* Form Styles */  
-.profile-form {  
+/* Section CV analysé */  
+.cv-analyzed-section {  
   padding: 2rem;  
 }  
   
-.form-section {  
+.profile-info {  
   margin-bottom: 2rem;  
 }  
   
-.form-section h2 {  
+.profile-info h2,  
+.competences-info h2,  
+.additional-info h2 {  
   font-size: 20px;  
   color: #1f2937;  
   margin-bottom: 1rem;  
   padding-bottom: 0.5rem;  
   border-bottom: 2px solid #e5e7eb;  
+  font-weight: 600;  
 }  
   
-.form-row {  
+.profile-badge {  
+  display: inline-block;  
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
+  color: white;  
+  padding: 12px 24px;  
+  border-radius: 25px;  
+  font-weight: 600;  
+  font-size: 16px;  
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);  
+  text-transform: capitalize;  
+}  
+  
+/* Section compétences */  
+.competences-info {  
+  margin-bottom: 2rem;  
+}  
+  
+.competences-list {  
   display: grid;  
-  grid-template-columns: 1fr 1fr;  
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  
   gap: 1rem;  
 }  
   
-.input-group {  
-  margin-bottom: 1rem;  
+.competence-item {  
+  background: #f8fafc;  
+  padding: 12px 16px;  
+  border-radius: 8px;  
+  border-left: 4px solid #667eea;  
+  font-weight: 500;  
+  color: #374151;  
+  transition: all 0.2s ease;  
+  font-size: 14px;  
 }  
   
-.input-group label {  
-  display: block;  
-  margin-bottom: 0.5rem;  
+.competence-item:hover {  
+  background: #f1f5f9;  
+  transform: translateY(-2px);  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+}  
+  
+/* Informations additionnelles */  
+.additional-info {  
+  margin-bottom: 2rem;  
+}  
+  
+.info-grid {  
+  display: grid;  
+  grid-template-columns: 1fr;  
+  gap: 1rem;  
+}  
+  
+.info-item {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 12px 16px;  
+  background: #f8fafc;  
+  border-radius: 8px;  
+  border-left: 4px solid #e5e7eb;  
+}  
+  
+.info-label {  
   font-weight: 600;  
   color: #374151;  
   font-size: 14px;  
 }  
   
-.input-group input,  
-.input-group textarea,  
-.input-group select {  
-  width: 100%;  
-  padding: 12px 16px;  
-  border: 2px solid #e5e7eb;  
-  border-radius: 8px;  
-  font-size: 14px;  
-  transition: all 0.2s ease;  
-  background: white;  
-}  
-  
-.input-group input:focus,  
-.input-group textarea:focus,  
-.input-group select:focus {  
-  outline: none;  
-  border-color: #667eea;  
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);  
-}  
-  
-.input-group input[readonly] {  
-  background: #f9fafb;  
+.info-item span:last-child {  
   color: #6b7280;  
-  cursor: not-allowed;  
+  font-size: 14px;  
 }  
   
-.input-group textarea {  
-  resize: vertical;  
-  min-height: 100px;  
+/* Barre d'indication en bas */  
+.cv-prompt-bar {  
+  position: fixed;  
+  bottom: 0;  
+  left: 0;  
+  right: 0;  
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
+  color: white;  
+  padding: 1rem;  
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);  
+  z-index: 40;  
+  animation: slideInUp 0.5s ease-out;  
 }  
   
-/* Form Actions */  
-.form-actions {  
+@keyframes slideInUp {  
+  from {  
+    transform: translateY(100%);  
+  }  
+  to {  
+    transform: translateY(0);  
+  }  
+}  
+  
+.prompt-content {  
+  max-width: 1200px;  
+  margin: 0 auto;  
   display: flex;  
+  align-items: center;  
   gap: 1rem;  
-  justify-content: flex-end;  
-  padding-top: 1rem;  
-  border-top: 1px solid #e5e7eb;  
 }  
   
-.btn-cancel,  
-.btn-save {  
+.prompt-icon {  
+  font-size: 2rem;  
+  opacity: 0.9;  
+}  
+  
+.prompt-text {  
+  flex: 1;  
+}  
+  
+.prompt-text h3 {  
+  font-size: 16px;  
+  font-weight: 600;  
+  margin-bottom: 0.25rem;  
+}  
+  
+.prompt-text p {  
+  font-size: 14px;  
+  opacity: 0.9;  
+  margin: 0;  
+}  
+  
+/* Bouton upload CV */  
+.btn-upload-cv {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 8px;  
   padding: 12px 24px;  
+  background: rgba(255, 255, 255, 0.2);  
+  color: white;  
+  border: 2px solid rgba(255, 255, 255, 0.3);  
   border-radius: 8px;  
   font-size: 14px;  
   font-weight: 600;  
   cursor: pointer;  
   transition: all 0.2s ease;  
-  display: flex;  
-  align-items: center;  
-  gap: 8px;  
-  border: none;  
+  text-decoration: none;  
+  backdrop-filter: blur(8px);  
 }  
   
-.btn-cancel {  
-  background: #f3f4f6;  
-  color: #374151;  
+.btn-upload-cv:hover {  
+  background: rgba(255, 255, 255, 0.3);  
+  border-color: rgba(255, 255, 255, 0.5);  
+  transform: translateY(-2px);  
 }  
   
-.btn-cancel:hover {  
-  background: #e5e7eb;  
+.btn-upload-cv:active {  
+  transform: translateY(0);  
 }  
   
-.btn-save {  
-  background: #667eea;  
-  color: white;  
-}  
-  
-.btn-save:hover {  
-  background: #5a67d8;  
-}  
-  
-.btn-save:disabled {  
-  background: #9ca3af;  
-  cursor: not-allowed;  
-}  
-  
-/* Loading state */  
+/* États de chargement */  
 .loading {  
   opacity: 0.7;  
   pointer-events: none;  
 }  
   
-/* Responsive */  
+.loading::after {  
+  content: '';  
+  display: inline-block;  
+  width: 16px;  
+  height: 16px;  
+  border: 2px solid #ffffff;  
+  border-radius: 50%;  
+  border-top-color: transparent;  
+  animation: spin 1s ease-in-out infinite;  
+  margin-left: 8px;  
+}  
+  
+@keyframes spin {  
+  to {  
+    transform: rotate(360deg);  
+  }  
+}  
+  
+/* Animations d'entrée */  
+.profile-content {  
+  animation: fadeInUp 0.6s ease-out;  
+}  
+  
+@keyframes fadeInUp {  
+  from {  
+    opacity: 0;  
+    transform: translateY(20px);  
+  }  
+  to {  
+    opacity: 1;  
+    transform: translateY(0);  
+  }  
+}  
+  
+/* Responsive Design */  
 @media (max-width: 768px) {  
   .profile-container {  
     margin: 1rem auto;  
+    padding: 0 0 140px;  
   }  
     
   .profile-content {  
     border-radius: 0;  
-    margin: 0 -1rem;  
-  }  
-    
-  .form-row {  
-    grid-template-columns: 1fr;  
-  }  
-    
-  .form-actions {  
-    flex-direction: column;  
+    margin: 0;  
   }  
     
   .profile-header {  
     padding: 1.5rem;  
   }  
     
-  .profile-form {  
+  .profile-header h1 {  
+    font-size: 24px;  
+  }  
+    
+  .profile-avatar {  
+    width: 60px;  
+    height: 60px;  
+    font-size: 24px;  
+  }  
+    
+  .cv-analyzed-section {  
     padding: 1.5rem;  
   }  
+    
+  .competences-list {  
+    grid-template-columns: 1fr;  
+  }  
+    
+  .header-content {  
+    padding: 0 0.5rem;  
+  }  
+    
+  .btn-back {  
+    font-size: 12px;  
+    padding: 6px 12px;  
+  }  
+    
+  .prompt-content {  
+    flex-direction: column;  
+    text-align: center;  
+    gap: 0.75rem;  
+  }  
+    
+  .prompt-text h3 {  
+    font-size: 14px;  
+  }  
+    
+  .prompt-text p {  
+    font-size: 12px;  
+  }  
+    
+  .btn-upload-cv {  
+    font-size: 12px;  
+    padding: 8px 16px;  
+  }  
+}  
+  
+@media (max-width: 480px) {  
+  .profile-header {  
+    padding: 1rem;  
+  }  
+    
+  .cv-analyzed-section {  
+    padding: 1rem;  
+  }  
+    
+  .profile-info h2,  
+  .competences-info h2,  
+  .additional-info h2 {  
+    font-size: 18px;  
+  }  
+    
+  .profile-badge {  
+    font-size: 14px;  
+    padding: 10px 20px;  
+  }  
+    
+  .cv-prompt-bar {  
+    padding: 0.75rem;  
+  }  
+    
+  .prompt-icon {  
+    font-size: 1.5rem;  
+  }  
+}  
+  
+/* Accessibilité */  
+@media (prefers-reduced-motion: reduce) {  
+  * {  
+    animation-duration: 0.01ms !important;  
+    animation-iteration-count: 1 !important;  
+    transition-duration: 0.01ms !important;  
+  }  
+}  
+  
+/* Mode sombre (optionnel) */  
+@media (prefers-color-scheme: dark) {  
+  body {  
+    background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%);  
+  }  
+    
+  .profile-content {  
+    background: #1f2937;  
+    color: white;  
+  }  
+    
+  .profile-info h2,  
+  .competences-info h2,  
+  .additional-info h2 {  
+    color: white;  
+    border-bottom-color: #374151;  
+  }  
+    
+  .competence-item {  
+    background: #374151;  
+    color: #d1d5db;  
+    border-left-color: #667eea;  
+  }  
+    
+  .competence-item:hover {  
+    background: #4b5563;  
+  }  
+    
+  .info-item {  
+    background: #374151;  
+    border-left-color: #4b5563;  
+  }  
+    
+  .info-label {  
+    color: #d1d5db;  
+  }  
+    
+  .info-item span:last-child {  
+    color: #9ca3af;  
+  }  
+  .cv-actions {  
+  display: flex;  
+  gap: 1rem;  
+  justify-content: center;  
+  flex-wrap: wrap;  
+}  
+  
+.btn-delete-cv {  
+  display: inline-flex;  
+  align-items: center;  
+  gap: 8px;  
+  padding: 12px 24px;  
+  background: #ef4444;  
+  color: white;  
+  border: none;  
+  border-radius: 8px;  
+  font-size: 14px;  
+  font-weight: 600;  
+  cursor: pointer;  
+  transition: all 0.2s ease;  
+  text-decoration: none;  
+}  
+  
+.btn-delete-cv:hover {  
+  background: #dc2626;  
+  transform: translateY(-2px);  
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);  
+}  
+  
+@media (max-width: 768px) {  
+  .cv-actions {  
+    flex-direction: column;  
+  }  
+
+}
 }

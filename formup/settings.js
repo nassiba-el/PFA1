@@ -1,3 +1,4 @@
+// Import Firebase modules  
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';  
 import { getAuth, onAuthStateChanged, updatePassword, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';  
 import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';  
@@ -37,7 +38,7 @@ onAuthStateChanged(auth, async (user) => {
 async function loadUserSettings(uid) {  
   try {  
     const userDoc = await getDoc(doc(db, "users", uid));  
-      
+        
     if (userDoc.exists()) {  
       userSettings = userDoc.data();  
       applySettings(userSettings);  
@@ -66,25 +67,25 @@ function applySettings(settings) {
     themeSelect.value = settings.theme || 'light';  
     applyTheme(settings.theme || 'light');  
   }  
-  
+    
   // Langue  
   const languageSelect = document.getElementById('languageSelect');  
   if (languageSelect) {  
     languageSelect.value = settings.language || 'fr-FR';  
   }  
-  
+    
   // Notifications email  
   const emailToggle = document.getElementById('emailNotificationsToggle');  
   if (emailToggle) {  
     emailToggle.checked = settings.emailNotifications !== false;  
   }  
-  
+    
   // Recommandations  
   const recommendationsToggle = document.getElementById('recommendationsToggle');  
   if (recommendationsToggle) {  
     recommendationsToggle.checked = settings.recommendations !== false;  
   }  
-  
+    
   // 2FA  
   const twoFactorToggle = document.getElementById('twoFactorToggle');  
   if (twoFactorToggle) {  
@@ -95,7 +96,7 @@ function applySettings(settings) {
 // Appliquer le thème  
 function applyTheme(theme) {  
   const body = document.body;  
-    
+      
   if (theme === 'dark') {  
     body.classList.add('dark-theme');  
   } else if (theme === 'auto') {  
@@ -118,36 +119,36 @@ function setupEventHandlers() {
   const closePasswordModal = document.getElementById('closePasswordModal');  
   const cancelPasswordChange = document.getElementById('cancelPasswordChange');  
   const passwordForm = document.getElementById('passwordForm');  
-  
+    
   if (changePasswordBtn) {  
     changePasswordBtn.addEventListener('click', () => {  
       passwordModal.style.display = 'block';  
     });  
   }  
-  
+    
   if (closePasswordModal) {  
     closePasswordModal.addEventListener('click', () => {  
       passwordModal.style.display = 'none';  
     });  
   }  
-  
+    
   if (cancelPasswordChange) {  
     cancelPasswordChange.addEventListener('click', () => {  
       passwordModal.style.display = 'none';  
     });  
   }  
-  
+    
   if (passwordForm) {  
     passwordForm.addEventListener('submit', handlePasswordChange);  
   }  
-  
+    
   // Fermer modal en cliquant à l'extérieur  
   window.addEventListener('click', (event) => {  
     if (event.target === passwordModal) {  
       passwordModal.style.display = 'none';  
     }  
   });  
-  
+    
   // Changement de thème  
   const themeSelect = document.getElementById('themeSelect');  
   if (themeSelect) {  
@@ -157,7 +158,7 @@ function setupEventHandlers() {
       await saveSettings({ theme: newTheme });  
     });  
   }  
-  
+    
   // Changement de langue  
   const languageSelect = document.getElementById('languageSelect');  
   if (languageSelect) {  
@@ -166,7 +167,7 @@ function setupEventHandlers() {
       await saveSettings({ language: newLanguage });  
     });  
   }  
-  
+    
   // Notifications email  
   const emailToggle = document.getElementById('emailNotificationsToggle');  
   if (emailToggle) {  
@@ -174,7 +175,7 @@ function setupEventHandlers() {
       await saveSettings({ emailNotifications: e.target.checked });  
     });  
   }  
-  
+    
   // Recommandations  
   const recommendationsToggle = document.getElementById('recommendationsToggle');  
   if (recommendationsToggle) {  
@@ -182,7 +183,7 @@ function setupEventHandlers() {
       await saveSettings({ recommendations: e.target.checked });  
     });  
   }  
-  
+    
   // 2FA  
   const twoFactorToggle = document.getElementById('twoFactorToggle');  
   if (twoFactorToggle) {  
@@ -195,7 +196,7 @@ function setupEventHandlers() {
       }  
     });  
   }  
-  
+    
   // Suppression du compte  
   const deleteAccountBtn = document.getElementById('deleteAccountBtn');  
   if (deleteAccountBtn) {  
@@ -206,34 +207,34 @@ function setupEventHandlers() {
 // Gestionnaire de changement de mot de passe  
 async function handlePasswordChange(event) {  
   event.preventDefault();  
-    
+      
   const currentPassword = document.getElementById('currentPassword').value;  
   const newPassword = document.getElementById('newPassword').value;  
   const confirmPassword = document.getElementById('confirmPassword').value;  
-  
+    
   // Validation  
   if (newPassword !== confirmPassword) {  
     showNotification("Les mots de passe ne correspondent pas", "error");  
     return;  
   }  
-  
+    
   if (newPassword.length < 6) {  
     showNotification("Le mot de passe doit contenir au moins 6 caractères", "error");  
     return;  
   }  
-  
+    
   try {  
     // Réauthentifier l'utilisateur  
     const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);  
     await reauthenticateWithCredential(currentUser, credential);  
-  
+    
     // Mettre à jour le mot de passe  
     await updatePassword(currentUser, newPassword);  
-  
+    
     showNotification("Mot de passe mis à jour avec succès", "success");  
     document.getElementById('passwordModal').style.display = 'none';  
     document.getElementById('passwordForm').reset();  
-  
+    
   } catch (error) {  
     console.error("Erreur lors du changement de mot de passe:", error);  
     if (error.code === 'auth/wrong-password') {  
@@ -247,18 +248,18 @@ async function handlePasswordChange(event) {
 // Sauvegarder les paramètres  
 async function saveSettings(newSettings) {  
   if (!currentUser) return;  
-  
+    
   try {  
     const userDocRef = doc(db, "users", currentUser.uid);  
-      
+        
     // Fusionner avec les paramètres existants  
     userSettings = { ...userSettings, ...newSettings };  
-      
+        
     await updateDoc(userDocRef, {  
       settings: userSettings,  
       lastSettingsUpdate: new Date().toISOString()  
     });  
-  
+    
     console.log('Paramètres sauvegardés:', newSettings);  
   } catch (error) {  
     console.error('Erreur lors de la sauvegarde des paramètres:', error);  
@@ -274,34 +275,34 @@ async function handleAccountDeletion() {
     "Cette action est irréversible.\n\n" +  
     "Êtes-vous sûr de vouloir continuer ?"  
   );  
-  
+    
   if (!confirmed) return;  
-  
+    
   const doubleConfirm = confirm(  
     "Dernière confirmation :\n\n" +  
     "Tapez 'SUPPRIMER' dans la prochaine boîte de dialogue pour confirmer la suppression de votre compte."  
   );  
-  
-  if (!doubleConfirm) return;  
-  
-  const confirmText = prompt("Tapez 'SUPPRIMER' pour confirmer :");  
     
+  if (!doubleConfirm) return;  
+    
+  const confirmText = prompt("Tapez 'SUPPRIMER' pour confirmer :");  
+      
   if (confirmText !== 'SUPPRIMER') {  
     showNotification("Suppression annulée", "info");  
     return;  
   }  
-  
+    
   try {  
     // Supprimer les données utilisateur de Firestore  
     const userDocRef = doc(db, "users", currentUser.uid);  
     await deleteDoc(userDocRef);  
-  
+    
     // Supprimer le compte utilisateur  
     await deleteUser(currentUser);  
-  
+    
     alert("Votre compte a été supprimé avec succès. Vous allez être redirigé vers la page d'accueil.");  
     window.location.href = "formup.html";  
-  
+    
   } catch (error) {  
     console.error("Erreur lors de la suppression du compte:", error);  
     if (error.code === 'auth/requires-recent-login') {  
@@ -317,7 +318,7 @@ function showNotification(message, type = 'info') {
   // Supprimer les notifications existantes  
   const existingNotifications = document.querySelectorAll('.notification');  
   existingNotifications.forEach(notif => notif.remove());  
-    
+      
   // Créer la nouvelle notification  
   const notification = document.createElement('div');  
   notification.className = `notification notification-${type}`;  
@@ -332,10 +333,10 @@ function showNotification(message, type = 'info') {
       </button>  
     </div>  
   `;  
-    
+      
   // Ajouter la notification au DOM  
   document.body.appendChild(notification);  
-    
+      
   // Supprimer automatiquement après 5 secondes  
   setTimeout(() => {  
     if (notification.parentElement) {  

@@ -12,7 +12,7 @@ body {
   
 /* Header */  
 .header {  
-  background: rgba(255, 255, 255, 0.8);  
+  background: rgba(128, 128, 128, 0.3); /* Gris transparent pour le header */  
   backdrop-filter: blur(16px);  
   border-bottom: 1px solid #e5e7eb;  
   position: sticky;  
@@ -41,8 +41,8 @@ body {
   align-items: center;  
   gap: 8px;  
   padding: 8px 16px;  
-  background: #f3f4f6;  
-  color: #374151;  
+  background: #1F2937; /* Couleur principale FormUp */  
+  color: white;  
   text-decoration: none;  
   border-radius: 8px;  
   font-size: 14px;  
@@ -51,8 +51,8 @@ body {
 }  
   
 .btn-back:hover {  
-  background: #e5e7eb;  
-  color: #1f2937;  
+  background: #374151; /* Couleur hover FormUp */  
+  transform: translateY(-1px);  
 }  
   
 /* Settings Container */  
@@ -65,12 +65,12 @@ body {
 .settings-content {  
   background: white;  
   border-radius: 16px;  
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
   overflow: hidden;  
 }  
   
 .settings-header {  
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
+  background: linear-gradient(135deg, #1F2937 0%, #374151 100%); /* Gradient FormUp */  
   color: white;  
   padding: 2rem;  
   text-align: center;  
@@ -104,12 +104,12 @@ body {
   
 .section-header h2 {  
   font-size: 20px;  
-  color: #1f2937;  
+  color: #1F2937; /* Couleur principale FormUp */  
   margin-bottom: 1rem;  
 }  
   
 .danger-zone .section-header h2 {  
-  color: #dc2626;  
+  color: #dc2626; /* Conserver le rouge pour la zone dangereuse */  
 }  
   
 /* Setting Items */  
@@ -128,7 +128,7 @@ body {
 .setting-info h3 {  
   font-size: 16px;  
   font-weight: 600;  
-  color: #1f2937;  
+  color: #1F2937; /* Couleur principale FormUp */  
   margin-bottom: 0.25rem;  
 }  
   
@@ -149,25 +149,25 @@ body {
 }  
   
 .btn-primary {  
-  background: #667eea;  
+  background: #1F2937; /* Couleur principale FormUp */  
   color: white;  
 }  
   
 .btn-primary:hover {  
-  background: #5a67d8;  
+  background: #374151; /* Couleur hover FormUp */  
 }  
   
 .btn-secondary {  
-  background: #f3f4f6;  
+  background: #e5e7eb; /* Gris clair pour le bouton secondaire */  
   color: #374151;  
 }  
   
 .btn-secondary:hover {  
-  background: #e5e7eb;  
+  background: #d1d5db;  
 }  
   
 .btn-danger {  
-  background: #dc2626;  
+  background: #dc2626; /* Conserver le rouge pour le bouton danger */  
   color: white;  
 }  
   
@@ -214,7 +214,7 @@ body {
 }  
   
 input:checked + .slider {  
-  background-color: #667eea;  
+  background-color: #1F2937; /* Couleur principale FormUp pour le toggle activé */  
 }  
   
 input:checked + .slider:before {  
@@ -233,7 +233,7 @@ input:checked + .slider:before {
   
 .setting-select:focus {  
   outline: none;  
-  border-color: #667eea;  
+  border-color: #667eea; /* Couleur focus cohérente */  
 }  
   
 /* Modal */  
@@ -250,7 +250,7 @@ input:checked + .slider:before {
   
 .modal-content {  
   background-color: white;  
-  margin: 15% auto;  
+  margin: 8% auto;  
   padding: 0;  
   border-radius: 12px;  
   width: 90%;  
@@ -269,7 +269,7 @@ input:checked + .slider:before {
 .modal-header h3 {  
   font-size: 18px;  
   font-weight: 600;  
-  color: #1f2937;  
+  color: #1F2937; /* Couleur principale FormUp */  
 }  
   
 .modal-close {  
@@ -299,7 +299,7 @@ input:checked + .slider:before {
   color: #374151;  
   font-size: 14px;  
 }  
-  .input-group input {  
+.input-group input {  
   width: 100%;  
   padding: 12px 16px;  
   border: 2px solid #e5e7eb;  
@@ -429,12 +429,12 @@ body.dark-theme .setting-select {
 }  
   
 .notification-success {  
-  background: #10b981;  
+  background: #10b981; /* Conserver le vert pour le succès */  
   color: white;  
 }  
   
 .notification-error {  
-  background: #ef4444;  
+  background: #ef4444; /* Conserver le rouge pour l'erreur */  
   color: white;  
 }  
   
@@ -459,4 +459,75 @@ body.dark-theme .setting-select {
 .notification-close:hover {  
   opacity: 1;  
   background: rgba(255, 255, 255, 0.1);  
+}
+
+.notification-close:hover {    
+  opacity: 1;    
+  background: rgba(255, 255, 255, 0.1);    
+}  
+  
+/* Scrollbar personnalisée */  
+::-webkit-scrollbar {  
+  width: 8px;  
+}  
+  
+::-webkit-scrollbar-track {  
+  background: #f1f5f9;  
+  border-radius: 4px;  
+}  
+  
+::-webkit-scrollbar-thumb {  
+  background: #cbd5e1;  
+  border-radius: 4px;  
+}  
+  
+::-webkit-scrollbar-thumb:hover {  
+  background: #94a3b8;  
+}  
+  
+/* États de chargement */  
+.loading-state {  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  padding: 3rem;  
+  color: #6b7280;  
+}  
+  
+.loading-spinner {  
+  width: 32px;  
+  height: 32px;  
+  border: 3px solid #e5e7eb;  
+  border-top: 3px solid #1F2937; /* Couleur principale FormUp */  
+  border-radius: 50%;  
+  animation: spin 1s linear infinite;  
+}  
+  
+@keyframes spin {  
+  0% { transform: rotate(0deg); }  
+  100% { transform: rotate(360deg); }  
+}  
+  
+/* État vide pour les paramètres */  
+.empty-state {  
+  text-align: center;  
+  padding: 3rem 2rem;  
+  color: #6b7280;  
+}  
+  
+.empty-state h3 {  
+  color: #1F2937; /* Couleur principale FormUp */  
+  margin-bottom: 1rem;  
+  font-size: 1.25rem;  
+}  
+  
+.empty-state p {  
+  margin-bottom: 1.5rem;  
+  line-height: 1.6;  
+}  
+  
+.empty-state-icon {  
+  font-size: 4rem;  
+  margin-bottom: 1rem;  
+  opacity: 0.5;  
 }

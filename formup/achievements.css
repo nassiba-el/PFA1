@@ -1,348 +1,383 @@
-* {  
-  margin: 0;  
-  padding: 0;  
-  box-sizing: border-box;  
-}  
-  
-body {  
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;  
-  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);  
-  min-height: 100vh;  
-}  
-  
-/* Header */  
-.header {  
-  background: rgba(255, 255, 255, 0.8);  
-  backdrop-filter: blur(16px);  
-  border-bottom: 1px solid #e5e7eb;  
-  position: sticky;  
-  top: 0;  
-  z-index: 50;  
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
-}  
-  
-.header-content {  
-  max-width: 1280px;  
-  margin: 0 auto;  
-  padding: 0 1rem;  
-  display: flex;  
-  align-items: center;  
-  justify-content: space-between;  
-  height: 64px;  
-}  
-  
-.logo-image {  
-  height: 32px;  
-  border-radius: 6px;  
-}  
-  
-.btn-back {  
-  display: flex;  
-  align-items: center;  
-  gap: 8px;  
-  padding: 8px 16px;  
-  background: #f3f4f6;  
-  color: #374151;  
-  text-decoration: none;  
-  border-radius: 8px;  
-  font-size: 14px;  
-  font-weight: 500;  
-  transition: all 0.2s ease;  
-}  
-  
-.btn-back:hover {  
-  background: #e5e7eb;  
-  color: #1f2937;  
-}  
-  
-/* Achievements Container */  
-.achievements-container {  
-  max-width: 1200px;  
-  margin: 2rem auto;  
-  padding: 0 1rem;  
-}  
-  
-.achievements-content {  
-  background: white;  
-  border-radius: 16px;  
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);  
-  overflow: hidden;  
-}  
-  
-.achievements-header {  
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);  
-  color: white;  
-  padding: 2rem;  
-  text-align: center;  
-}  
-  
-.achievement-avatar {  
-  width: 80px;  
-  height: 80px;  
-  border-radius: 50%;  
-  background: rgba(255, 255, 255, 0.2);  
-  display: flex;  
-  align-items: center;  
-  justify-content: center;  
-  font-size: 32px;  
-  margin: 0 auto 1rem;  
-  border: 3px solid rgba(255, 255, 255, 0.3);  
-}  
-  
-.achievements-header h1 {  
-  font-size: 28px;  
-  margin-bottom: 0.5rem;  
-}  
-  
-.achievements-subtitle {  
-  opacity: 0.9;  
-  font-size: 16px;  
-}  
-  
-/* Stats Section */  
-.stats-section {  
-  display: grid;  
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
-  gap: 1rem;  
-  padding: 2rem;  
-  border-bottom: 1px solid #e5e7eb;  
-}  
-  
-.stat-card {  
-  background: #f8fafc;  
-  border-radius: 12px;  
-  padding: 1.5rem;  
-  display: flex;  
-  align-items: center;  
-  gap: 1rem;  
-  transition: transform 0.2s ease;  
-}  
-  
-.stat-card:hover {  
-  transform: translateY(-2px);  
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  
-}  
-  
-.stat-icon {  
-  font-size: 2rem;  
-  width: 60px;  
-  height: 60px;  
-  display: flex;  
-  align-items: center;  
-  justify-content: center;  
-  background: white;  
-  border-radius: 50%;  
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
-}  
-  
-.stat-info h3 {  
-  font-size: 24px;  
-  font-weight: bold;  
-  color: #1f2937;  
-  margin-bottom: 0.25rem;  
-}  
-  
-.stat-info p {  
-  color: #6b7280;  
-  font-size: 14px;  
-}  
-  
-/* Progress Chart */  
-.progress-chart-section {  
-  padding: 2rem;  
-  border-bottom: 1px solid #e5e7eb;  
-}  
-  
-.progress-chart-section h2 {  
-  font-size: 20px;  
-  color: #1f2937;  
-  margin-bottom: 1rem;  
-}  
-  
-.chart-container {  
-  background: #f8fafc;  
-  border-radius: 12px;  
-  padding: 1rem;  
-  display: flex;  
-  justify-content: center;  
-}  
-  
-/* Current Courses */  
-.current-courses-section {  
-  padding: 2rem;  
-  border-bottom: 1px solid #e5e7eb;  
-}  
-  
-.current-courses-section h2 {  
-  font-size: 20px;  
-  color: #1f2937;  
-  margin-bottom: 1rem;  
-}  
-  
-.course-progress-item {  
-  background: #f8fafc;  
-  border-radius: 12px;  
-  padding: 1.5rem;  
-  margin-bottom: 1rem;  
-}  
-  
-.course-progress-header {  
-  display: flex;  
-  justify-content: space-between;  
-  align-items: center;  
-  margin-bottom: 1rem;  
-}  
-  
-.course-title {  
-  font-weight: 600;  
-  color: #1f2937;  
-}  
-  
-.course-percentage {  
-  font-weight: bold;  
-  color: #059669;  
-}  
-  
-.progress-bar {  
-  width: 100%;  
-  height: 8px;  
-  background: #e5e7eb;  
-  border-radius: 4px;  
-  overflow: hidden;  
-}  
-  
-.progress-fill {  
-  height: 100%;  
-  background: linear-gradient(90deg, #10b981, #059669);  
-  transition: width 0.3s ease;  
-}  
-  
-/* Badges Section */  
-.badges-section {  
-  padding: 2rem;  
-  border-bottom: 1px solid #e5e7eb;  
-}  
-  
-.badges-section h2 {  
-  font-size: 20px;  
-  color: #1f2937;  
-  margin-bottom: 1rem;  
-}  
-  
-.badges-grid {  
-  display: grid;  
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  
-  gap: 1rem;  
-}  
-  
-.badge-item {  
-  background: #f8fafc;  
-  border-radius: 12px;  
-  padding: 1.5rem;  
-  text-align: center;  
-  transition: transform 0.2s ease;  
-}  
-  
-.badge-item:hover {  
-  transform: scale(1.05);  
-}  
-  
-.badge-icon {  
-  font-size: 3rem;  
-  margin-bottom: 0.5rem;  
-}  
-  
-.badge-name {  
-  font-weight: 600;  
-  color: #1f2937;  
-  margin-bottom: 0.25rem;  
-}  
-  
-.badge-description {  
-  font-size: 12px;  
-  color: #6b7280;  
-}  
-  
-/* Certificates Section */  
-.certificates-section {  
-  padding: 2rem;  
-}  
-  
-.certificates-section h2 {  
-  font-size: 20px;  
-  color: #1f2937;  
-  margin-bottom: 1rem;  
-}  
-  
-.certificates-grid {  
-  display: grid;  
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  
-  gap: 1rem;  
-}  
-  
-.certificate-item {  
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  
-  color: white;  
-  border-radius: 12px;  
-  padding: 2rem;  
-  text-align: center;  
-  position: relative;  
-  overflow: hidden;  
-}  
-  
-.certificate-item::before {  
-  content: '';  
-  position: absolute;  
-  top: -50%;  
-  left: -50%;  
-  width: 200%;  
-  height: 200%;  
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);  
-  animation: shimmer 3s infinite;  
-}  
-  
-@keyframes shimmer {  
-  0% { transform: rotate(0deg); }  
-  100% { transform: rotate(360deg); }  
-}  
-  
-.certificate-icon {  
-  font-size: 3rem;  
-  margin-bottom: 1rem;  
-}  
-  
-.certificate-title {  
-  font-size: 18px;  
-  font-weight: bold;  
-  margin-bottom: 0.5rem;  
-}  
-  
-.certificate-date {  
-  opacity: 0.8;  
-  font-size: 14px;  
-}  
-  
-/* Responsive */  
-@media (max-width: 768px) {  
-  .achievements-container {  
-    margin: 1rem auto;  
-  }  
+* {    
+  margin: 0;    
+  padding: 0;    
+  box-sizing: border-box;    
+}    
     
-  .achievements-content {  
-    border-radius: 0;  
-    margin: 0 -1rem;  
-  }  
+body {    
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;    
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);    
+  min-height: 100vh;    
+}    
     
-  .stats-section {  
-    grid-template-columns: 1fr;  
+/* Header */    
+.header {    
+  background: rgba(128, 128, 128, 0.3); /* Palette FormUp transparente */  
+  backdrop-filter: blur(16px);    
+  border-bottom: 1px solid #e5e7eb;    
+  position: sticky;    
+  top: 0;    
+  z-index: 50;    
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);    
+}    
+    
+.header-content {    
+  max-width: 1280px;    
+  margin: 0 auto;    
+  padding: 0 1rem;    
+  display: flex;    
+  align-items: center;    
+  justify-content: space-between;    
+  height: 64px;    
+}    
+    
+.logo-image {    
+  height: 32px;    
+  border-radius: 6px;    
+}    
+    
+.btn-back {    
+  display: flex;    
+  align-items: center;    
+  gap: 8px;    
+  padding: 8px 16px;    
+  background: #1F2937; /* Couleur principale FormUp */  
+  color: white;    
+  text-decoration: none;    
+  border-radius: 8px;    
+  font-size: 14px;    
+  font-weight: 500;    
+  transition: all 0.2s ease;    
+}    
+    
+.btn-back:hover {    
+  background: #374151; /* Couleur hover FormUp */  
+  transform: translateY(-1px);  
+}    
+    
+/* Achievements Container */    
+.achievements-container {    
+  max-width: 1200px;    
+  margin: 2rem auto;    
+  padding: 0 1rem;    
+}    
+    
+.achievements-content {    
+  background: white;    
+  border-radius: 16px;    
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);    
+  overflow: hidden;    
+}    
+    
+.achievements-header {    
+  background: linear-gradient(135deg, #1F2937 0%, #374151 100%); /* Palette FormUp */  
+  color: white;    
+  padding: 2rem;    
+  text-align: center;    
+}    
+    
+.achievement-avatar {    
+  width: 80px;    
+  height: 80px;    
+  border-radius: 50%;    
+  background: rgba(255, 255, 255, 0.2);    
+  display: flex;    
+  align-items: center;    
+  justify-content: center;    
+  font-size: 32px;    
+  margin: 0 auto 1rem;    
+  border: 3px solid rgba(255, 255, 255, 0.3);    
+}    
+    
+.achievements-header h1 {    
+  font-size: 28px;    
+  margin-bottom: 0.5rem;    
+}    
+    
+.achievements-subtitle {    
+  opacity: 0.9;    
+  font-size: 16px;    
+}    
+    
+/* Stats Section */    
+.stats-section {    
+  display: grid;    
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));    
+  gap: 1rem;    
+  padding: 2rem;    
+  border-bottom: 1px solid #e5e7eb;    
+}    
+    
+.stat-card {    
+  background: #f8fafc;    
+  border-radius: 12px;    
+  padding: 1.5rem;    
+  display: flex;    
+  align-items: center;    
+  gap: 1rem;    
+  transition: transform 0.2s ease;    
+  border: 1px solid #e5e7eb;  
+}    
+    
+.stat-card:hover {    
+  transform: translateY(-2px);    
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);    
+  border-color: #1F2937; /* Bordure hover FormUp */  
+}    
+    
+.stat-icon {    
+  font-size: 2rem;    
+  width: 60px;    
+  height: 60px;    
+  display: flex;    
+  align-items: center;    
+  justify-content: center;    
+  background: white;    
+  border-radius: 50%;    
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);    
+  color: #1F2937; /* Couleur icône FormUp */  
+}    
+    
+.stat-info h3 {    
+  font-size: 24px;    
+  font-weight: bold;    
+  color: #1F2937; /* Couleur texte FormUp */  
+  margin-bottom: 0.25rem;    
+}    
+    
+.stat-info p {    
+  color: #6b7280;    
+  font-size: 14px;    
+}    
+    
+/* Progress Chart */    
+.progress-chart-section {    
+  padding: 2rem;    
+  border-bottom: 1px solid #e5e7eb;    
+}    
+    
+.progress-chart-section h2 {    
+  font-size: 20px;    
+  color: #1F2937; /* Couleur titre FormUp */  
+  margin-bottom: 1rem;    
+}    
+    
+.chart-container {    
+  background: #f8fafc;    
+  border-radius: 12px;    
+  padding: 1rem;    
+  display: flex;    
+  justify-content: center;    
+  border: 1px solid #e5e7eb;  
+}    
+    
+/* Current Courses */    
+.current-courses-section {    
+  padding: 2rem;    
+  border-bottom: 1px solid #e5e7eb;    
+}    
+    
+.current-courses-section h2 {    
+  font-size: 20px;    
+  color: #1F2937; /* Couleur titre FormUp */  
+  margin-bottom: 1rem;    
+}    
+    
+.course-progress-item {    
+  background: #f8fafc;    
+  border-radius: 12px;    
+  padding: 1.5rem;    
+  margin-bottom: 1rem;    
+  border: 1px solid #e5e7eb;  
+}    
+    
+.course-progress-header {    
+  display: flex;    
+  justify-content: space-between;    
+  align-items: center;    
+  margin-bottom: 1rem;    
+}    
+    
+.course-title {    
+  font-weight: 600;    
+  color: #1F2937; /* Couleur titre FormUp */  
+}    
+    
+.course-percentage {    
+  font-weight: bold;    
+  color: #374151; /* Couleur pourcentage FormUp */  
+}    
+    
+.progress-bar {    
+  width: 100%;    
+  height: 8px;    
+  background: #e5e7eb;    
+  border-radius: 4px;    
+  overflow: hidden;    
+}    
+    
+.progress-fill {    
+  height: 100%;    
+  background: linear-gradient(90deg, #1F2937, #374151); /* Gradient FormUp */  
+  transition: width 0.3s ease;    
+}    
+    
+/* Badges Section */    
+.badges-section {    
+  padding: 2rem;    
+  border-bottom: 1px solid #e5e7eb;    
+}    
+    
+.badges-section h2 {    
+  font-size: 20px;    
+  color: #1F2937; /* Couleur titre FormUp */  
+  margin-bottom: 1rem;    
+}    
+    
+.badges-grid {    
+  display: grid;    
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));    
+  gap: 1rem;    
+}    
+    
+.badge-item {    
+  background: #f8fafc;    
+  border-radius: 12px;    
+  padding: 1.5rem;    
+  text-align: center;    
+  transition: transform 0.2s ease;    
+  border: 1px solid #e5e7eb;  
+}    
+    
+.badge-item:hover {    
+  transform: scale(1.05);    
+  border-color: #1F2937; /* Bordure hover FormUp */  
+}    
+    
+.badge-icon {    
+  font-size: 3rem;    
+  margin-bottom: 0.5rem;    
+  color: #1F2937; /* Couleur icône FormUp */  
+}    
+    
+.badge-name {    
+  font-weight: 600;    
+  color: #1F2937; /* Couleur nom FormUp */  
+  margin-bottom: 0.25rem;    
+}    
+    
+.badge-description {    
+  font-size: 12px;    
+  color: #6b7280;    
+}    
+    
+/* Certificates Section */    
+.certificates-section {    
+  padding: 2rem;    
+}    
+    
+.certificates-section h2 {    
+  font-size: 20px;    
+  color: #1F2937; /* Couleur titre FormUp */  
+  margin-bottom: 1rem;    
+}    
+    
+.certificates-grid {    
+  display: grid;    
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));    
+  gap: 1rem;    
+}    
+    
+.certificate-item {    
+  background: linear-gradient(135deg, #1F2937 0%, #374151 100%); /* Gradient FormUp */  
+  color: white;    
+  border-radius: 12px;    
+  padding: 2rem;    
+  text-align: center;    
+  position: relative;    
+  overflow: hidden;    
+}    
+    
+.certificate-item::before {    
+  content: '';    
+  position: absolute;    
+  top: -50%;    
+  left: -50%;    
+  width: 200%;    
+  height: 200%;    
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);    
+  animation: shimmer 3s infinite;    
+}    
+    
+@keyframes shimmer {    
+  0% { transform: rotate(0deg); }    
+  100% { transform: rotate(360deg); }    
+}    
+    
+.certificate-icon {    
+  font-size: 3rem;    
+  margin-bottom: 1rem;    
+}    
+    
+.certificate-title {    
+  font-size: 18px;    
+  font-weight: bold;    
+  margin-bottom: 0.5rem;    
+}    
+    
+.certificate-date {    
+  opacity: 0.8;    
+  font-size: 14px;    
+}    
+    
+/* Responsive */    
+@media (max-width: 768px) {    
+  .achievements-container {    
+    margin: 1rem auto;    
+    padding: 0 0.5rem;  
+  }    
+      
+  .achievements-content {    
+    border-radius: 8px;  
+  }    
+      
+  .stats-section {    
+    grid-template-columns: 1fr;    
+    padding: 1.5rem;    
+  }    
+      
+  .badges-grid {    
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));    
+  }    
+      
+  .certificates-grid {    
+    grid-template-columns: 1fr;    
+  }  
+  
+  .achievements-header {  
     padding: 1.5rem;  
   }  
-    
-  .badges-grid {  
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));  
+  
+  .btn-back {  
+    font-size: 12px;  
+    padding: 6px 12px;  
   }  
-    
-  .certificates-grid {  
-    grid-template-columns: 1fr;  
+}  
+  
+@media (max-width: 480px) {  
+  .achievements-header h1 {  
+    font-size: 24px;  
+  }  
+  
+  .achievements-subtitle {  
+    font-size: 14px;  
+  }  
+  
+  .stat-card {  
+    padding: 1rem;  
+  }  
+  
+  .certificate-item {  
+    padding: 1.5rem;  
   }  
 }

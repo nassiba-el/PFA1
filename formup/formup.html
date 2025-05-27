@@ -1,70 +1,41 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FormUp - Plateforme de formations</title>
-  <link rel="stylesheet" href="formup.css">
-</head>
-<body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <!-- Logo et recherche -->
-      <div class="logo-section">
-        <div class="logo">
-          <img src="formup.png" alt="FormUp Logo" class="logo-image">
-        </div>
-        
-        <div class="search-bar">
-          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0z"/>
-          </svg>
-          <input type="text" class="search-input" placeholder="Rechercher une formation...">
-        </div>
-      </div>
-
-      <!-- Catégories -->
-      <div class="nav-center">
-        <ul class="categories">
-          <li><a href="#" class="category-badge">Development</a></li>
-          <li><a href="#" class="category-badge">Management</a></li>
-          <li><a href="#" class="category-badge">Finance</a></li>
-          <li><a href="#" class="category-badge">Graphic Design</a></li>
-        </ul>
-      </div>
-
-      <!-- Menu utilisateur -->
-      <div class="user-menu">
-        <button class="btn btn-login" onclick="window.location.href='login.html'">Log in</button>
-        <button class="btn btn-signup" onclick="window.location.href='signup.html'">Sign up</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <img class="hero-background" src="image.jpg" alt="Formation background">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="hero-title">
-        Une seule recherche. Des milliers de formations.
-      </h1>
-      <p class="hero-description">
-        Les bonnes recommandations, au bon moment. Découvrez des formations adaptées à vos besoins et boostez votre carrière.
-      </p>
-      
-      <div class="hero-buttons">
-        <a href="#" class="btn-primary">
-          Commencer maintenant
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12,5 19,12 12,19"/>
-          </svg>
-        </a>
-        <a href="#" class="btn-outline">Explorer les formations</a>
-      </div>
-    </div>
-  </section>
-</body>
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>FormUp - Plateforme de Formation</title>  
+  <link rel="stylesheet" href="formup.css">  
+</head>  
+<body>  
+  <!-- Header simplifié -->  
+  <header class="header">  
+    <div class="header-content">  
+      <div class="logo-section">  
+        <div class="logo">  
+          <img src="formup.png" alt="FormUp Logo" class="logo-image">  
+        </div>  
+      </div>  
+    </div>  
+  </header>  
+  
+  <!-- Section Hero avec boutons centrés -->  
+  <section class="hero">  
+    <img class="hero-background" src="image.jpg" alt="Formation background">  
+    <div class="hero-overlay"></div>  
+    <div class="hero-content">  
+      <h1 class="hero-title">Bienvenue sur FormUp</h1>  
+      <p class="hero-description">Votre plateforme de formation personnalisée</p>  
+      <div class="hero-buttons">  
+        <button class="btn-primary" onclick="window.location.href='login.html'">  
+          Se connecter  
+        </button>  
+        <button class="btn-outline" onclick="window.location.href='signup.html'">  
+          S'inscrire  
+        </button>  
+      </div>  
+    </div>  
+  </section>  
+  
+  <script type="module" src="formup.js"></script>  
+</body>  
 </html>
