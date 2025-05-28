@@ -172,8 +172,45 @@ function displayAdditionalInfo(data) {
     } else {  
       userGithub.textContent = 'Non renseigné';  
     }  
+  } 
+  const userCertifications = document.getElementById('userCertifications');  
+const formationsRecommandees = document.getElementById('formationsRecommandees');  
+  
+// Affichage des certifications  
+if (userCertifications) {  
+  if (data.certifications_recommandees && data.certifications_recommandees.length > 0) {  
+    const certList = data.certifications_recommandees.map(cert =>   
+      `<span class="certification-badge">${cert}</span>`  
+    ).join('');  
+    userCertifications.innerHTML = certList;  
+  } else {  
+    userCertifications.innerHTML = '<p>Aucune certification recommandée</p>';  
   }  
 }  
+  
+// Affichage des formations  
+if (formationsRecommandees) {  
+  if (data.formations_recommandees && data.formations_recommandees.length > 0) {  
+    const formationsList = data.formations_recommandees.map(formation =>   
+      `<div class="formation-card">  
+         <h4>${formation.titre}</h4>  
+         <p class="formation-description">${formation.description}</p>  
+         <div class="formation-meta">  
+           <span class="niveau-badge">${formation.niveau}</span>  
+           <span class="duree">⏱ ${formation.duree}</span>  
+           <span class="instructeur">👨‍🏫 ${formation.instructeur}</span>  
+         </div>  
+         <a href="${formation.lien}" target="_blank" class="formation-link">Commencer la formation</a>  
+       </div>`  
+    ).join('');  
+    formationsRecommandees.innerHTML = formationsList;  
+  } else {  
+    formationsRecommandees.innerHTML = '<p>Aucune formation recommandée</p>';  
+  }  
+}
+ 
+} 
+
   
 // Mettre à jour l'avatar du profil  
 function updateProfileAvatar(data) {  
@@ -339,7 +376,7 @@ function showNotification(message, type = 'info') {
         
       .notification-close:hover {  
         opacity: 1;  
-        background: rgba(255, 255, 255, 0.1);  
+        background: rgba(207, 207, 207, 0.1);  
       }  
         
       @keyframes slideIn {  
@@ -419,6 +456,36 @@ async function deleteCVData() {
     showNotification('Erreur lors de la suppression des données CV', 'error');  
   }  
 }
+
+// Fonction pour réinitialiser le profil  
+async function resetProfile() {  
+  const confirmed = confirm(  
+    "⚠️ Réinitialiser le profil ⚠️\n\n" +  
+    "Cette action va :\n" +  
+    "- Supprimer votre profil professionnel actuel\n" +  
+    "- Effacer vos compétences analysées\n" +  
+    "- Supprimer les formations et certifications recommandées\n" +  
+    "- Vous permettre de re-uploader un nouveau CV\n\n" +  
+    "Êtes-vous sûr de vouloir continuer ?"  
+  );  
+  
+  if (!confirmed) return;  
+  
+  try {  
+    // Utiliser la fonction existante deleteCVData  
+    await deleteCVData();  
+      
+    // Afficher immédiatement l'option d'upload  
+    setTimeout(() => {  
+      showUploadOption();  
+    }, 500);  
+      
+  } catch (error) {  
+    console.error('Erreur lors de la réinitialisation:', error);  
+    showNotification('Erreur lors de la réinitialisation du profil', 'error');  
+  }  
+}
+
 // Rendre la fonction globale pour l'utiliser dans le HTML  
 window.showUploadOption = showUploadOption;  
 window.handleCVUpload = handleCVUpload;  
@@ -432,3 +499,4 @@ window.showUploadOption = showUploadOption;
 window.handleCVUpload = handleCVUpload;  
 window.deleteCVData = deleteCVData; 
 console.log('Profile.js chargé avec succès');
+window.resetProfile = resetProfile;

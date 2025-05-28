@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify  
 from flask_cors import CORS  
 import os  
-from traitement_cv import CVProfileExtractor  
+from classification import CVProfileExtractor  
   
 app = Flask(__name__)  
 CORS(app)  

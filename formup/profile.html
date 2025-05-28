@@ -52,34 +52,22 @@
                         <!-- Les compétences seront ajoutées dynamiquement -->  
                     </div>  
                 </div>  
-  
-                <div class="additional-info">  
-                    <h2>Informations Complémentaires</h2>  
-                    <div class="info-grid">  
-                        <div class="info-item">  
-                            <span class="info-label">Titre professionnel:</span>  
-                            <span id="userHeadline">Non renseigné</span>  
-                        </div>  
-                        <div class="info-item">  
-                            <span class="info-label">Biographie:</span>  
-                            <span id="userBio">Non renseignée</span>  
-                        </div>  
-                        <div class="info-item">  
-                            <span class="info-label">Portfolio:</span>  
-                            <span id="userPortfolio">Non renseigné</span>  
-                        </div>  
-                        <div class="info-item">  
-                            <span class="info-label">LinkedIn:</span>  
-                            <span id="userLinkedin">Non renseigné</span>  
-                        </div>  
-                        <div class="info-item">  
-                            <span class="info-label">GitHub:</span>  
-                            <span id="userGithub">Non renseigné</span>  
-                        </div>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
+   
+<div class="formations-recommandees">  
+    <h2>Formations Recommandées</h2>  
+    <div class="formations-list" id="formationsRecommandees">  
+        <!-- Les formations seront ajoutées dynamiquement -->  
+    </div>  
+</div> 
+<div class="cv-actions">  
+    <button class="btn-reset-cv" onclick="resetProfile()">  
+        🔄 Réinitialiser le profil  
+    </button>  
+    <button class="btn-upload-cv" onclick="showUploadOption()">  
+        📤 Mettre à jour mon CV  
+    </button>  
+</div> 
+            </div> 
   
         <!-- Barre d'indication en bas (visible si cvAnalyzed = false) -->  
         <div class="cv-prompt-bar" id="cvPromptBar" style="display: none;">  

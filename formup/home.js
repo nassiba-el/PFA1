@@ -120,11 +120,15 @@ async function updateUserProfile(profileData) {
         
     // Mettre à jour Firestore    
     const userDocRef = doc(db, "users", user.uid);    
-    await updateDoc(userDocRef, {    
-      profile: profileData.profil_principal || 'Profil inconnu',    
-      cvAnalyzed: true,    
-      lastCVUpdate: new Date().toISOString()    
-    });    
+    await updateDoc(userDocRef, {  
+  profile: profileData.profil_principal || 'Profil inconnu',  
+  cvAnalyzed: true,  
+  lastCVUpdate: new Date().toISOString(),  
+  competences_cles: profileData.competences_cles || [],  
+  linkedin: profileData.linkedin,  
+  certifications_recommandees: profileData.certifications_recommandees || [],  
+  formations_recommandees: profileData.formations_recommandees || []  
+});    
         
     // Mettre à jour l'interface immédiatement    
     const userProfile = document.getElementById('userProfile');    
@@ -442,11 +446,17 @@ async function handleFileUpload(event) {
         
     const result = await response.json();    
         
-    const mockProfileData = {    
-      profil_principal: 'Profil en cours d\'analyse',    
-      niveau_confiance: 0,    
-      competences_cles: result.structured_data?.skills?.slice(0, 3) || []    
-    };    
+    const profileData = {  
+  profil_principal: result.profil_principal,  
+  niveau_confiance: result.niveau_confiance,  
+  competences_cles: result.competences_cles || [],  
+  linkedin: result.linkedin,  
+  certifications_recommandees: result.certifications_recommandees || [],  
+  formations_recommandees: result.formations_recommandees || []  
+};  
+  
+await updateUserProfile(profileData);  
+await displayRecommendedFormations(profileData.formations_recommandees);    
         
     await updateUserProfile(mockProfileData);    
     alert(`CV "${file.name}" structuré avec succès!\nFichier JSON généré: ${result.json_file}`);    

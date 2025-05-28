@@ -42,18 +42,28 @@ window.logIn = async function(event) {
     await updateDoc(userDocRef, {  
       lastLogin: new Date().toISOString()  
     });  
+// Configuration des emails admin  
+const ADMIN_EMAILS = [  
+  'nassibanassiba99@gmail.com'  
+];  
   
-    // Récupérer les données utilisateur  
-    const userDoc = await getDoc(userDocRef);  
-    if (userDoc.exists()) {  
-      const userData = userDoc.data();  
-      alert("Connexion réussie ! Bienvenue " + userData.fullname + " !");  
-    } else {  
-      alert("Connexion réussie !");  
-    }  
-  
-    // Redirection vers la page principale  
-    window.location.href = "home.html";  
+// Récupérer les données utilisateur  
+const userDoc = await getDoc(userDocRef);  
+if (userDoc.exists()) {  
+  const userData = userDoc.data();  
+    
+  // Vérifier si l'email est dans la liste des admins  
+  if (ADMIN_EMAILS.includes(userData.email)) {  
+    alert("Connexion administrateur réussie ! Bienvenue " + userData.fullname + " !");  
+    window.location.href = "admin.html"; // Page avec table des utilisateurs  
+  } else {  
+    alert("Connexion réussie ! Bienvenue " + userData.fullname + " !");  
+    window.location.href = "home.html"; // Page des formations  
+  }  
+} else {  
+  alert("Connexion réussie !");  
+  window.location.href = "home.html"; // Par défaut : page des formations  
+}
   
   } catch (error) {  
     console.error("Erreur lors de la connexion:", error);  

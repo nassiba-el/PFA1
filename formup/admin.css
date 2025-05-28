@@ -1,0 +1,161 @@
+* {    
+  margin: 0;    
+  padding: 0;    
+  box-sizing: border-box;    
+}    
+    
+body {    
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;    
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);    
+  min-height: 100vh;    
+}    
+    
+/* Header */    
+.header {    
+  background: rgba(128, 128, 128, 0.3); /* Palette FormUp transparente */  
+  backdrop-filter: blur(16px);    
+  border-bottom: 1px solid #e5e7eb;    
+  position: sticky;    
+  top: 0;    
+  z-index: 50;    
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);    
+}    
+    
+.header-content {    
+  max-width: 1280px;    
+  margin: 0 auto;    
+  padding: 0 1rem;    
+  display: flex;    
+  align-items: center;    
+  justify-content: space-between;    
+  height: 64px;   
+} 
+
+.logo-image {    
+  height: 32px;    
+  border-radius: 6px;    
+}
+.btn-back {    
+  display: flex;    
+  align-items: center;    
+  gap: 8px;    
+  padding: 8px 16px;    
+  background: #1F2937;
+  color: white;    
+  text-decoration: none;    
+  border-radius: 8px;    
+  font-size: 14px;    
+  font-weight: 500;    
+  transition: all 0.2s ease;   
+  cursor: pointer;
+  left: 20px; 
+}
+.btn-back:hover {    
+  background: #374151;
+  transform: translateY(-1px);
+}
+.user-actions {  
+  display: flex;  
+  align-items: center;  
+  margin-left: auto; /* Pousse le contenu vers la droite */  
+}
+/* Container & Card */
+.achievements-container {    
+  max-width: 1200px;    
+  margin: 2rem auto;    
+  padding: 0 1rem;    
+}
+.achievements-content {    
+  background: white;    
+  border-radius: 16px;    
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);    
+  overflow: hidden;    
+}
+.achievements-header {    
+  background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+  color: white;    
+  padding: 2rem;    
+  text-align: center;    
+}
+.achievements-header h1 {    
+  font-size: 28px;    
+  margin-bottom: 0.5rem;    
+}
+.achievements-subtitle {    
+  opacity: 0.9;    
+  font-size: 16px;    
+}
+/* Table */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.users-table th,
+.users-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+.users-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  font-size: 16px;
+}
+.users-table tr:nth-child(even) {
+  background: #f8fafc;
+}
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+.logout-btn {    
+  display: flex;    
+  align-items: center;    
+  gap: 8px;    
+  padding: 8px 16px;    
+  background: #1F2937; /* Couleur principale FormUp */  
+  color: white;    
+  text-decoration: none;    
+  border-radius: 8px;    
+  font-size: 14px;    
+  font-weight: 500;    
+  transition: all 0.2s ease;    
+}    
+    
+.logout-btn:hover {    
+  background: #374151; /* Couleur hover FormUp */  
+  transform: translateY(-1px);  
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .achievements-container {
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+  }
+  .achievements-content {
+    border-radius: 8px;
+  }
+  .achievements-header {  
+    padding: 1.5rem;
+  }
+  .btn-back {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  .users-table th, .users-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+@media (max-width: 480px) {
+  .achievements-header h1 {
+    font-size: 24px;
+  }
+  .achievements-subtitle {
+    font-size: 14px;
+  }
+}

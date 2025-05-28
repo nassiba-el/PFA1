@@ -3,9 +3,19 @@ from flask_cors import CORS
 import os  
 import json  
 from pathlib import Path  
-from traitement_cv import CVProfileExtractor  
+from classification import CVProfileExtractor  
 from organization import parse_cv_with_llm  # Votre fichier de structuration  
-  
+import firebase_admin  
+from firebase_admin import credentials, firestore  
+from classification import CVProfileExtractor
+from classification import classify_profil_llm  # Votre fichier de classification
+
+# Initialiser Firebase  
+if not firebase_admin._apps:  
+    cred = credentials.Certificate("path/to/serviceAccountKey.json")  
+    firebase_admin.initialize_app(cred)  
+db = firestore.client()
+
 app = Flask(__name__)  
 CORS(app)  
   
@@ -35,6 +45,13 @@ def structure_cv():
         structured_data = parse_cv_with_llm(cv_text)  
         if not structured_data:  
             return jsonify({'error': 'Impossible de structurer le CV'}), 500  
+        
+        # ÉTAPE 3: Classifier le profil  
+        profile_result = classify_profil_llm(structured_data)  
+        profile = profile_result['profile'][0]['profile'] if profile_result and profile_result.get('profile') else "profil général"  
+  
+        # ÉTAPE 4: Recommander des formations  
+        formations_recommandees = get_formations_by_profile(profile)
           
         # Générer le fichier JSON structuré  
         structured_json_file = f"cv_structure_{Path(temp_path).stem}.json"  
@@ -44,9 +61,11 @@ def structure_cv():
         # Retourner les données structurées et le nom du fichier généré  
         return jsonify({  
             'structured_data': structured_data,  
+            'profil_principal': profile,  
+            'formations_recommandees': formations_recommandees,  
             'json_file': structured_json_file,  
             'message': 'CV structuré avec succès'  
-        })  
+        }) 
       
     finally:  
         # Nettoyer le fichier temporaire  
@@ -55,3 +74,24 @@ def structure_cv():
   
 if __name__ == '__main__':  
     app.run(debug=True, port=5000)
+
+
+def get_formations_by_profile(profile: str):  
+    try:  
+        formations_ref = db.collection('formations')  
+        query = formations_ref.where('profil', '==', profile).limit(10)  
+        formations = query.stream()  
+          
+        recommended_formations = []  
+        for formation in formations:  
+            data = formation.to_dict()  
+            recommended_formations.append({  
+                "titre": data.get('titre'),  
+                "description": data.get('description'),  
+                "lien": data.get('lien'),  
+                "niveau": data.get('niveau')  
+            })  
+          
+        return recommended_formations  
+    except Exception as e:  
+        return []
