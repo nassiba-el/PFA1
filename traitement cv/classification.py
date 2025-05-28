@@ -6,7 +6,7 @@ import os
 from groq import Groq
 
 def classify_profil_llm(candidat_info, max_retries=3, retry_delay=5):
-    client = Groq(api_key="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")
+    client = Groq(api_key="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")
 
     system_prompt = '''You are a professional career classifier. Based on the following work experience, skills, certifications, projects, and technologies, classify the candidate into 1 top most relevant job profile.
 

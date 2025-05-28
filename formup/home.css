@@ -329,6 +329,7 @@
       display: flex;
       gap: 1rem;
       list-style: none;
+      padding-right: 5rem;
     }
 
     .category-badge {
@@ -345,36 +346,9 @@
 
     .category-badge:hover,
     .category-badge.active {
-      background: #e5e7eb;
+      background: #3c4553;
+      color: #f3f4f6;
       transform: scale(1.05);
-    }
-
-    .cv-upload {
-      border-left: 1px solid #d1d5db;
-      padding-left: 1rem;
-    }
-
-    .cv-upload-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 8px 16px;
-      background: #1F2937;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .cv-upload-btn:hover {
-      background: #374151;
-    }
-
-    .cv-file-input {
-      display: none;
     }
 
     /* Courses Section */

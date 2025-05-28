@@ -85,6 +85,39 @@ async function loadUserData(uid) {
       email: auth.currentUser.email       
     });      
   }      
+}
+// Ajouter après loadUserData  
+async function displayStudiedFormations() {  
+  try {  
+    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));  
+    if (userDoc.exists()) {  
+      const userData = userDoc.data();  
+      const formationsEtudiees = userData.formations_etudiees || [];  
+        
+      if (formationsEtudiees.length > 0) {  
+        // Créer une section pour les formations en cours  
+        const studiedSection = document.createElement('section');  
+        studiedSection.className = 'studied-formations-section';  
+        studiedSection.innerHTML = `  
+          <div class="courses-content">  
+            <div class="courses-header">  
+              <h2 class="courses-title">📚 Mes Formations en Cours</h2>  
+            </div>  
+            <div class="studied-grid" id="studiedGrid"></div>  
+          </div>  
+        `;  
+          
+        // Insérer avant la section des cours  
+        const coursesSection = document.getElementById('courses-section');  
+        coursesSection.parentNode.insertBefore(studiedSection, coursesSection);  
+          
+        // Charger les détails des formations  
+        await loadStudiedFormationsDetails(formationsEtudiees);  
+      }  
+    }  
+  } catch (error) {  
+    console.error("Erreur lors du chargement des formations étudiées:", error);  
+  }  
 }      
       
 // Mettre à jour l'interface utilisateur avec gestion du profil    
@@ -271,8 +304,8 @@ async function generateCourses() {
             <span>⏱ ${formation.duree}</span>    
           </div>    
         </div>    
-        <button class="course-button" onclick="window.open('${formation.lien}', '_blank')">    
-          Commencer le cours    
+        <button class="course-button" onclick="startCourse('${formation.id}')">  
+           Commencer le cours  
         </button>    
       </div>    
     `;    
@@ -333,7 +366,7 @@ async function filterCoursesByCategory(selectedCategory) {
             <span>⏱ ${formation.duree}</span>      
           </div>      
         </div>      
-        <button class="course-button" onclick="window.open('${formation.lien}', '_blank')">Commencer le cours</button>      
+        <button class="course-button" onclick="startCourse('${formation.id}')">Commencer le cours</button>      
       </div>      
     `;      
           
@@ -401,76 +434,7 @@ function setupScrollAnimation() {
     observer.observe(card);    
   });    
 }    
-    
-// Gestion de l'upload CV avec intégration améliorée du système d'analyse    
-async function handleFileUpload(event) {      
-  const file = event.target.files[0];      
-  if (!file) return;      
-        
-  const allowedTypes = [      
-    'application/pdf',      
-    'application/msword',      
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',    
-    'image/png',    
-    'image/jpeg',    
-    'image/jpg'    
-  ];      
-        
-  if (file.size > 5 * 1024 * 1024) {      
-    alert('Le fichier est trop volumineux (max 5MB)');      
-    return;      
-  }      
-        
-  if (!allowedTypes.includes(file.type)) {      
-    alert('Type de fichier non supporté. Utilisez PDF, DOC, DOCX ou images.');      
-    return;      
-  }      
-        
-  console.log('CV uploadé:', file.name);      
-        
-  // Appel au service de structuration Python    
-  const formData = new FormData();    
-  formData.append('cv_file', file);    
-      
-  try {    
-    const response = await fetch('http://localhost:5000/api/structure-cv', {    
-      method: 'POST',    
-      body: formData,  
-      // Ajouter un timeout  
-      signal: AbortSignal.timeout(30000) // 30 secondes  
-    });    
-        
-    if (!response.ok) {    
-      throw new Error(`Erreur HTTP: ${response.status}`);    
-    }    
-        
-    const result = await response.json();    
-        
-    const profileData = {  
-  profil_principal: result.profil_principal,  
-  niveau_confiance: result.niveau_confiance,  
-  competences_cles: result.competences_cles || [],  
-  linkedin: result.linkedin,  
-  certifications_recommandees: result.certifications_recommandees || [],  
-  formations_recommandees: result.formations_recommandees || []  
-};  
-  
-await updateUserProfile(profileData);  
-await displayRecommendedFormations(profileData.formations_recommandees);    
-        
-    await updateUserProfile(mockProfileData);    
-    alert(`CV "${file.name}" structuré avec succès!\nFichier JSON généré: ${result.json_file}`);    
-        
-  } catch (error) {    
-    console.error('Erreur:', error);    
-    if (error.name === 'TimeoutError') {  
-      alert('Timeout: Le traitement du CV prend trop de temps');  
-    } else {  
-      alert('Erreur lors de la structuration du CV: ' + error.message);  
-    }  
-  }    
-}    
-    
+
 // Fonction de déconnexion    
 function logout() {    
   signOut(auth).then(() => {    
@@ -574,7 +538,15 @@ function filterCoursesBySearch(searchTerm, originalContent) {
       card.style.display = 'none';    
     }    
   });    
-}    
+} 
+
+function startCourse(formationId) {  
+    // Rediriger vers votre page study avec l'ID de la formation  
+    window.location.href = `study.html?id=${formationId}`;  
+}  
+  
+// Rendre la fonction globale  
+window.startCourse = startCourse;
     
 function highlightSearchTerm(card, searchTerm) {    
   const regex = new RegExp(`(${searchTerm})`, 'gi');    

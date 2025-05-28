@@ -11,16 +11,16 @@ from classification import CVProfileExtractor
 from classification import classify_profil_llm  # Votre fichier de classification
 
 # Initialiser Firebase  
-if not firebase_admin._apps:  
-    cred = credentials.Certificate("path/to/serviceAccountKey.json")  
-    firebase_admin.initialize_app(cred)  
+if not firebase_admin._apps:    
+    cred = credentials.Certificate("./serviceAccountKey.json")    
+    firebase_admin.initialize_app(cred)    
 db = firestore.client()
 
 app = Flask(__name__)  
 CORS(app)  
   
 # Initialiser l'extracteur pour l'extraction de texte  
-extractor = CVProfileExtractor("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")  
+extractor = CVProfileExtractor("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")  
   
 @app.route('/api/structure-cv', methods=['POST'])  
 def structure_cv():  
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 def get_formations_by_profile(profile: str):  
     try:  
         formations_ref = db.collection('formations')  
-        query = formations_ref.where('profil', '==', profile).limit(10)  
+        query = formations_ref.where('categorie', '==', profile).limit(10)  # Changé 'profil' en 'categorie'  
         formations = query.stream()  
           
         recommended_formations = []  
@@ -89,9 +89,12 @@ def get_formations_by_profile(profile: str):
                 "titre": data.get('titre'),  
                 "description": data.get('description'),  
                 "lien": data.get('lien'),  
-                "niveau": data.get('niveau')  
+                "niveau": data.get('niveau'),  
+                "duree": data.get('duree'),  
+                "instructeur": data.get('instructeur')  
             })  
           
         return recommended_formations  
     except Exception as e:  
+        print(f"Erreur lors de la récupération des formations: {e}")  
         return []

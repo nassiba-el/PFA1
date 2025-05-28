@@ -172,40 +172,76 @@ function displayAdditionalInfo(data) {
     } else {  
       userGithub.textContent = 'Non renseigné';  
     }  
-  } 
-  const userCertifications = document.getElementById('userCertifications');  
+  }   
 const formationsRecommandees = document.getElementById('formationsRecommandees');  
-  
-// Affichage des certifications  
-if (userCertifications) {  
-  if (data.certifications_recommandees && data.certifications_recommandees.length > 0) {  
-    const certList = data.certifications_recommandees.map(cert =>   
-      `<span class="certification-badge">${cert}</span>`  
-    ).join('');  
-    userCertifications.innerHTML = certList;  
-  } else {  
-    userCertifications.innerHTML = '<p>Aucune certification recommandée</p>';  
-  }  
-}  
+ 
   
 // Affichage des formations  
-if (formationsRecommandees) {  
-  if (data.formations_recommandees && data.formations_recommandees.length > 0) {  
-    const formationsList = data.formations_recommandees.map(formation =>   
-      `<div class="formation-card">  
-         <h4>${formation.titre}</h4>  
-         <p class="formation-description">${formation.description}</p>  
-         <div class="formation-meta">  
-           <span class="niveau-badge">${formation.niveau}</span>  
-           <span class="duree">⏱ ${formation.duree}</span>  
-           <span class="instructeur">👨‍🏫 ${formation.instructeur}</span>  
-         </div>  
-         <a href="${formation.lien}" target="_blank" class="formation-link">Commencer la formation</a>  
-       </div>`  
+// Affichage des formations    
+if (formationsRecommandees) {    
+  let formationsList = '';  
+    
+  // Add existing recommended formations if any  
+  if (data.formations_recommandees && data.formations_recommandees.length > 0) {    
+    formationsList = data.formations_recommandees.map(formation =>     
+      `<div class="formation-card">    
+         <h4>${formation.titre}</h4>    
+         <p class="formation-description">${formation.description}</p>    
+         <div class="formation-meta">    
+           <span class="niveau-badge">${formation.niveau}</span>    
+           <span class="duree">⏱ ${formation.duree}</span>    
+           <span class="instructeur">👨‍🏫 ${formation.instructeur}</span>    
+         </div>    
+         <a href="${formation.lien}" target="_blank" class="formation-link">Commencer la formation</a>    
+       </div>`    
     ).join('');  
-    formationsRecommandees.innerHTML = formationsList;  
-  } else {  
-    formationsRecommandees.innerHTML = '<p>Aucune formation recommandée</p>';  
+  }  
+    
+  // Add web development formations  
+  const webDevFormations = [  
+    {  
+      titre: "HTML & CSS Fundamentals",  
+      description: "Apprenez les bases du développement web avec HTML5 et CSS3",  
+      niveau: "Débutant",  
+      duree: "20h",  
+      instructeur: "Expert Web",  
+      lien: "#"  
+    },  
+    {  
+      titre: "JavaScript ES6+",  
+      description: "Maîtrisez JavaScript moderne pour le développement web",  
+      niveau: "Intermédiaire",   
+      duree: "30h",  
+      instructeur: "Dev JavaScript",  
+      lien: "#"  
+    },  
+    {  
+      titre: "React.js Development",  
+      description: "Créez des applications web modernes avec React",  
+      niveau: "Avancé",  
+      duree: "40h",   
+      instructeur: "React Expert",  
+      lien: "#"  
+    }  
+  ];  
+    
+  const webDevFormationsList = webDevFormations.map(formation =>     
+    `<div class="formation-card">    
+       <h4>${formation.titre}</h4>    
+       <p class="formation-description">${formation.description}</p>    
+       <div class="formation-meta">    
+         <span class="niveau-badge">${formation.niveau}</span>    
+         <span class="duree">⏱ ${formation.duree}</span>    
+         <span class="instructeur">👨‍🏫 ${formation.instructeur}</span>    
+       </div>    
+       <a href="${formation.lien}" target="_blank" class="formation-link">Commencer la formation</a>    
+     </div>`    
+  ).join('');  
+    
+  formationsRecommandees.innerHTML = formationsList + webDevFormationsList;  
+    
+  if (!formationsList && !webDevFormationsList) {  
+    formationsRecommandees.innerHTML = '<p>Aucune formation recommandée</p>';    
   }  
 }
  
@@ -257,24 +293,37 @@ async function handleCVUpload(event) {
     
   // Simulation de l'analyse (à remplacer par l'appel au service Python)  
   setTimeout(async () => {  
-    try {  
-      // Exemple de données retournées par le service Python  
-      const mockProfileData = {  
-        profil_principal: 'développement web',  
-        niveau_confiance: 85,  
-        competences_cles: ['JavaScript', 'React', 'Node.js', 'CSS', 'HTML']  
-      };  
-        
-      await updateUserProfile(mockProfileData);  
-      showNotification(`CV "${file.name}" traité avec succès! Profil mis à jour.`, 'success');  
-        
-      // Recharger le profil pour afficher les nouvelles données  
-      await loadUserProfile(currentUser.uid);  
-        
-    } catch (error) {  
-      console.error('Erreur lors de l\'analyse du CV:', error);  
-      showNotification('Erreur lors de l\'analyse du CV', 'error');  
-    }  
+   try {  
+  const formData = new FormData();  
+  formData.append('cv_file', file);  
+    
+  const response = await fetch('http://localhost:5000/api/structure-cv', {  
+    method: 'POST',  
+    body: formData  
+  });  
+    
+  if (!response.ok) {  
+    throw new Error('Erreur lors de l\'analyse du CV');  
+  }  
+    
+  const result = await response.json();  
+    
+  const profileData = {  
+    profil_principal: result.profil_principal,  
+    formations_recommandees: result.formations_recommandees || [],  
+    competences_cles: result.structured_data?.competences || [],  
+    niveau_confiance: result.niveau_confiance || 0  
+  };  
+    
+  await updateUserProfile(profileData);  
+  showNotification(`CV "${file.name}" traité avec succès! Profil mis à jour.`, 'success');  
+    
+  await loadUserProfile(currentUser.uid);  
+    
+} catch (error) {  
+  console.error('Erreur lors de l\'analyse du CV:', error);  
+  showNotification('Erreur lors de l\'analyse du CV', 'error');  
+}
   }, 2000);  
 }  
   
@@ -285,12 +334,13 @@ async function updateUserProfile(profileData) {
       
     const userDocRef = doc(db, "users", currentUser.uid);  
     await updateDoc(userDocRef, {  
-      profile: profileData.profil_principal || 'Profil inconnu',  
-      cvAnalyzed: true,  
-      lastCVUpdate: new Date().toISOString(),  
-      competences_cles: profileData.competences_cles || [],  
-      niveau_confiance: profileData.niveau_confiance || 0  
-    });  
+  profile: profileData.profil_principal || 'Profil inconnu',  
+  cvAnalyzed: true,  
+  lastCVUpdate: new Date().toISOString(),  
+  competences_cles: profileData.competences_cles || [],  
+  formations_recommandees: profileData.formations_recommandees || [],  
+  niveau_confiance: profileData.niveau_confiance || 0  
+}); 
       
     console.log('Profil utilisateur mis à jour:', profileData.profil_principal);  
   } catch (error) {  

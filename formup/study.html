@@ -1,0 +1,72 @@
+<!DOCTYPE html>      
+<html lang="fr">      
+<head>      
+  <meta charset="UTF-8">      
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">      
+  <title>FormUp - Étude</title>      
+  <link rel="stylesheet" href="study.css">      
+</head>      
+<body>      
+  <!-- Header en pleine largeur -->  
+  <header class="header">    
+    <div class="header-content">    
+      <div class="logo-section">    
+        <div class="logo">    
+          <img src="formup.png" alt="FormUp Logo" class="logo-image">    
+        </div>    
+      </div>    
+      <div class="back-button">    
+        <button class="btn-back" onclick="goBackToHome()">    
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">    
+            <path d="M19 12H5"/>    
+            <polyline points="12,19 5,12 12,5"/>    
+          </svg>    
+          Retour aux formations    
+        </button>    
+      </div>    
+    </div>    
+  </header>    
+  
+  <!-- Container pour le contenu avec max-width -->  
+  <div class="study-container">      
+    <div class="content-wrapper">  
+      <!-- Section avec titre de formation et progression -->    
+      <div class="study-info">      
+        <div class="formation-info">    
+          <h1 id="formationTitle" class="formation-title">Chargement...</h1>    
+          <p id="formationInstructor" class="formation-instructor"></p>    
+        </div>    
+        <div class="progress-container">    
+          <div class="progress-bar">      
+            <div class="progress-fill" id="progressFill"></div>      
+          </div>      
+          <span class="progress-text" id="progressText">0%</span>    
+        </div>    
+      </div>      
+            
+      <div class="study-content">      
+        <div class="lesson-content" id="lessonContent">      
+          <!-- Contenu de la leçon -->      
+        </div>      
+      </div>      
+            
+      <div class="study-navigation">      
+        <button class="btn-nav" id="prevBtn" onclick="previousLesson()">    
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">    
+            <polyline points="15,18 9,12 15,6"/>    
+          </svg>    
+          Précédent    
+        </button>      
+        <button class="btn-nav btn-primary" id="nextBtn" onclick="nextLesson()">    
+          Suivant    
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">    
+            <polyline points="9,18 15,12 9,6"/>    
+          </svg>    
+        </button>      
+      </div>  
+    </div>      
+  </div>      
+        
+  <script type="module" src="study.js"></script>      
+</body>      
+</html>

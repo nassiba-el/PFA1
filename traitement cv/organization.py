@@ -5,7 +5,7 @@ import re
 from groq import Groq
 
 def parse_cv_with_llm(cv_text, max_retries=3, retry_delay=5):
-    client = Groq(api_key="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")
+    client = Groq(api_key="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")
 
     system_prompt ='''You are a professional CV parser. Analyze the following CV text and structure it into JSON format.
 
