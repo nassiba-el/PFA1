@@ -1,100 +1,104 @@
-from flask import Flask, request, jsonify  
-from flask_cors import CORS  
-import os  
-import json  
-from pathlib import Path  
-from classification import CVProfileExtractor  
-from organization import parse_cv_with_llm  # Votre fichier de structuration  
-import firebase_admin  
-from firebase_admin import credentials, firestore  
-from classification import CVProfileExtractor
-from classification import classify_profil_llm  # Votre fichier de classification
+import os
+import json
+import tkinter as tk
+from tkinter import filedialog
+import subprocess
+# Importer la fonction depuis classification.py
+from classification import process_json_data
 
-# Initialiser Firebase  
-if not firebase_admin._apps:    
-    cred = credentials.Certificate("./serviceAccountKey.json")    
-    firebase_admin.initialize_app(cred)    
-db = firestore.client()
+def select_cv_file():
+    """Ouvre une boîte de dialogue pour sélectionner un fichier CV"""
+    root = tk.Tk()
+    root.withdraw()  # Masquer la fenêtre principale Tkinter
+    file_path = filedialog.askopenfilename(
+        title="Sélectionner un CV",
+        filetypes=[("Fichiers PDF", "*.pdf"), ("Fichiers texte", "*.txt"), ("Images", "*.png;*.jpg;*.jpeg")]
+    )
+    return file_path
 
-app = Flask(__name__)  
-CORS(app)  
-  
-# Initialiser l'extracteur pour l'extraction de texte  
-extractor = CVProfileExtractor("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")  
-  
-@app.route('/api/structure-cv', methods=['POST'])  
-def structure_cv():  
-    if 'cv_file' not in request.files:  
-        return jsonify({'error': 'Aucun fichier fourni'}), 400  
-      
-    file = request.files['cv_file']  
-    if file.filename == '':  
-        return jsonify({'error': 'Nom de fichier vide'}), 400  
-      
-    # Sauvegarder temporairement le fichier  
-    temp_path = f"temp_{file.filename}"  
-    file.save(temp_path)  
-      
-    try:  
-        # ÉTAPE 1: Extraire le texte du CV  
-        cv_text = extractor.process_cv_file(temp_path)  
-        if not cv_text:  
-            return jsonify({'error': 'Impossible d\'extraire le texte du CV'}), 500  
-          
-        # ÉTAPE 2: Structurer avec votre code organization.py  
-        structured_data = parse_cv_with_llm(cv_text)  
-        if not structured_data:  
-            return jsonify({'error': 'Impossible de structurer le CV'}), 500  
+def send_cv_to_processing(cv_path):
+    """Envoie le CV à organisation.py et récupère le JSON depuis stdout"""
+    # Chemin relatif du script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    script_path = os.path.join(current_dir, "organisation.py")
+    
+    try:
+        result = subprocess.run(
+            ["python", script_path, cv_path],
+            capture_output=True,
+            text=True,
+            check=True
+        )
         
-        # ÉTAPE 3: Classifier le profil  
-        profile_result = classify_profil_llm(structured_data)  
-        profile = profile_result['profile'][0]['profile'] if profile_result and profile_result.get('profile') else "profil général"  
-  
-        # ÉTAPE 4: Recommander des formations  
-        formations_recommandees = get_formations_by_profile(profile)
-          
-        # Générer le fichier JSON structuré  
-        structured_json_file = f"cv_structure_{Path(temp_path).stem}.json"  
-        with open(structured_json_file, 'w', encoding='utf-8') as f:  
-            json.dump(structured_data, f, ensure_ascii=False, indent=2)  
-          
-        # Retourner les données structurées et le nom du fichier généré  
-        return jsonify({  
-            'structured_data': structured_data,  
-            'profil_principal': profile,  
-            'formations_recommandees': formations_recommandees,  
-            'json_file': structured_json_file,  
-            'message': 'CV structuré avec succès'  
-        }) 
-      
-    finally:  
-        # Nettoyer le fichier temporaire  
-        if os.path.exists(temp_path):  
-            os.remove(temp_path)  
-  
-if __name__ == '__main__':  
-    app.run(debug=True, port=5000)
+        if result.stderr:
+            print(f"Avertissement de organisation.py: {result.stderr}")
+        
+        output = result.stdout
+        
+        # Extraire le JSON de la sortie en ignorant tout texte avant
+        json_start = output.find('{')
+        json_end = output.rfind('}')
+        
+        if json_start == -1 or json_end == -1:
+            print(f"Aucun JSON trouvé dans la sortie: {output[:100]}...")
+            return None
+            
+        json_str = output[json_start:json_end+1]
+        
+        try:
+            return json.loads(json_str)
+        except json.JSONDecodeError as e:
+            print(f"Erreur de parsing du JSON : {e}")
+            print(f"Sortie reçue: {output[:200]}...")
+            return None
+            
+    except subprocess.CalledProcessError as e:
+        print(f"Erreur lors de l'exécution du fichier organisation.py : {e}")
+        if e.stderr:
+            print(f"Détails de l'erreur: {e.stderr}")
+        return None
 
+def save_profile_json(profile_data, base_filename):
+    """Sauvegarde uniquement les données du profil dans un fichier JSON"""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    output_filename = f"{os.path.splitext(os.path.basename(base_filename))[0]}_profile.json"
+    output_path = os.path.join(base_dir, output_filename)
+    
+    with open(output_path, 'w', encoding='utf-8') as file:
+        json.dump(profile_data, file, ensure_ascii=False, indent=2)
+    
+    return output_path
 
-def get_formations_by_profile(profile: str):  
-    try:  
-        formations_ref = db.collection('formations')  
-        query = formations_ref.where('categorie', '==', profile).limit(10)  # Changé 'profil' en 'categorie'  
-        formations = query.stream()  
-          
-        recommended_formations = []  
-        for formation in formations:  
-            data = formation.to_dict()  
-            recommended_formations.append({  
-                "titre": data.get('titre'),  
-                "description": data.get('description'),  
-                "lien": data.get('lien'),  
-                "niveau": data.get('niveau'),  
-                "duree": data.get('duree'),  
-                "instructeur": data.get('instructeur')  
-            })  
-          
-        return recommended_formations  
-    except Exception as e:  
-        print(f"Erreur lors de la récupération des formations: {e}")  
-        return []
+def main():
+    """Interface principale pour sélectionner et traiter le CV"""
+    cv_path = select_cv_file()
+    if not cv_path:
+        print("Aucun fichier sélectionné.")
+        return
+    
+    print(f"Fichier sélectionné : {cv_path}")
+    
+    # Étape 1: Traiter le CV avec organisation.py
+    parsed_cv = send_cv_to_processing(cv_path)
+    
+    if not parsed_cv:
+        print("Échec du traitement du CV.")
+        return
+    
+    # Étape 2: Classifier le profil avec classification.py
+    print("Classification du profil en cours...")
+    profile_result = process_json_data(parsed_cv)
+    
+    if profile_result:
+        # Sauvegarder uniquement le JSON du profil
+        profile_json_path = save_profile_json(profile_result, cv_path)
+        print(f"Profil sauvegardé dans: {profile_json_path}")
+        
+        # Afficher le contenu du profil dans la console
+        print("\nProfil classifié:")
+        print(json.dumps(profile_result, ensure_ascii=False, indent=2))
+    else:
+        print("Échec de la classification du profil.")
+
+if __name__ == "__main__":
+    main()
